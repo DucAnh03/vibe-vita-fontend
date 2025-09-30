@@ -1,0 +1,133 @@
+.app_header {
+  width: 100%;
+  background-color: #000000;
+  position: relative;
+}
+
+.app_header_container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 110px;
+}
+
+/* Logo Section */
+.header_logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  border-radius: 31.9422px;
+  padding: 8px 16px;
+  transition: transform 0.3s ease;
+}
+
+.header_logo:hover {
+  transform: scale(1.05);
+}
+
+.logo_image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logo_text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #FB5241;
+  text-decoration: none;
+}
+
+/* Navigation Menu */
+.header_navigation {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  flex: 1;
+  justify-content: center;
+  margin-right: 0;
+}
+
+.nav_item {
+  background-color: #FFFFFF;
+  border-radius: 25px;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #000000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav_item:hover {
+  background-color: #FB5241;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+
+/* Header Divider */
+.header_divider {
+  width: 100%;
+  height: 1px;
+  background-color: #E87C7C;
+  margin-top: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .header_navigation {
+    gap: 15px;
+  }
+  
+  .nav_item {
+    padding: 12px 16px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app_header_container {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .header_navigation {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .nav_item {
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+
+}
+
+@media (max-width: 576px) {
+  .header_navigation {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav_item {
+    width: 100%;
+    text-align: center;
+  }
+
+}

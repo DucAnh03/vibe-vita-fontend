@@ -1,0 +1,37 @@
+/* Variable color, Background, Font - size, */
+:root {
+  /* Colors */
+  --primary-color-black: #000000;
+  --primary-color-red: #fb5241;
+
+  /* Màu nền */
+  --bg-color-white: #ffffff;
+  --bg-color-black: #000000;
+
+  /* Màu chữ */
+  --text-color-white: #ffffff;
+  --text-color-black: #000000;
+
+  /* Font sizes */
+  --font-size-base: 12px;
+  --font-size-sm: 15.73px;
+  --font-size-lg: 62.93px;
+  --font-size-xl: 32px;
+  --font-size-xxl: 104px;
+
+  /* Font Weight */
+  --font-weight-bold: 700;
+  --font-weight-sm: 500;
+  /* Define them neu can */
+  /* --font-weight-: 62.93px;
+  --font-weight-xl: 32px;
+  --font-weight-xxl: 104px; */
+
+  /* Line heights */
+  --line-height-primary: 100%;
+
+  /* Button Color */
+  --btn-color-pink: #FEDCDB;
+  /* Spacing */
+  --spacing-unit: 0.8rem;
+}

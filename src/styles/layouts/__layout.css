@@ -1,0 +1,16 @@
+.main__layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #000000;
+}
+
+.main_content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main_content_area {
+  flex: 1;
+}
