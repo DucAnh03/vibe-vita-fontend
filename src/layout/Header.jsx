@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   const headerItems = [
     { id: 1, name: "GỢI Ý", path: "/suggest" },
-    { id: 2, name: "QUẢN LÝ SỨC KHỎE", path: "/" },
+    { id: 2, name: "QUẢN LÝ SỨC KHỎE", path: "/health" },
     { id: 3, name: "LIST PHÒNG TẬP", path: "/" },
     { id: 4, name: "DANH SÁCH PT", path: "/" },
     { id: 5, name: "VỀ CHÚNG TÔI", path: "/" },

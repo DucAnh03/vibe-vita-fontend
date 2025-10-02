@@ -7,7 +7,7 @@ import utilities1 from "../assets/images/utilites1.png";
 import utilities2 from "../assets/images/utilities2.png";
 import utilities3 from "../assets/images/utilities3.png";
 import eatTodayImage from "../assets/images/eat-today.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AIChatBox from "../components/AIChatBox";
 
@@ -15,6 +15,7 @@ const Home = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -103,8 +104,7 @@ const Home = () => {
                         e.stopPropagation();
                         console.log("Profile button clicked");
                         setShowUserDropdown(false);
-                        // TODO: Navigate to profile page
-                        console.log("Navigate to profile");
+                        navigate("/profile");
                       }}
                     >
                       <svg

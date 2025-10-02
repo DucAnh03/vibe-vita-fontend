@@ -7,7 +7,8 @@ import Suggest from "../pages/Suggest";
 import WorkoutSuggest from "../pages/WorkoutSuggest";
 import MealSuggest from "../pages/MealSuggest";
 import MealDetail from "../pages/MealDetail";
-
+import HealthManagement from "../pages/HealthManagement.jsx";
+import Profile from "../pages/Profile.jsx";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -40,6 +41,14 @@ const routes = createBrowserRouter([
       {
         path: "/signup",
         element: <Auth />,
+      },
+      {
+        path: "/health", // ✅ thêm route mới
+        element: <HealthManagement />,
+      },
+      {
+        path: "/profile", // ✅ thêm route mới
+        element: <Profile />,
       },
     ],
   },
