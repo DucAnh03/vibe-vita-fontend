@@ -9,6 +9,9 @@ import MealSuggest from "../pages/MealSuggest";
 import MealDetail from "../pages/MealDetail";
 import HealthManagement from "../pages/HealthManagement.jsx";
 import Profile from "../pages/Profile.jsx";
+import Bmi from "../pages/Bmi.jsx";
+import ListGyms from "../pages/ListGyms.jsx";
+import ListTrainers from "../pages/ListTrainers.jsx";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -49,6 +52,18 @@ const routes = createBrowserRouter([
       {
         path: "/profile", // ✅ thêm route mới
         element: <Profile />,
+      },
+      {
+        path: "/bmi", // ✅ thêm route mới
+        element: <Bmi />,
+      },
+      {
+        path: "/list-gyms", // ✅ thêm route mới
+        element: <ListGyms />,
+      },
+      {
+        path: "/list-trainers", // ✅ thêm route mới
+        element: <ListTrainers />,
       },
     ],
   },

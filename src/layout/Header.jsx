@@ -5,11 +5,11 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const headerItems = [
-    { id: 1, name: "GỢI Ý", path: "/suggest" },
+    { id: 1, name: "GÓI CỦA BẠN", path: "/suggest" },
     { id: 2, name: "QUẢN LÝ SỨC KHỎE", path: "/health" },
-    { id: 3, name: "LIST PHÒNG TẬP", path: "/" },
-    { id: 4, name: "DANH SÁCH PT", path: "/" },
-    { id: 5, name: "VỀ CHÚNG TÔI", path: "/" },
+    { id: 3, name: "LIST PHÒNG TẬP", path: "/list-gyms" },
+    { id: 4, name: "DANH SÁCH PT", path: "/list-trainers" },
+    { id: 5, name: "VỀ CHÚNG TÔI", path: "/about" },
   ];
 
   return (
