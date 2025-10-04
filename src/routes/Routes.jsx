@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home";
+import PThome from "../pages/PThome";
 import Auth from "../pages/Auth";
 import Suggest from "../pages/Suggest";
 import WorkoutSuggest from "../pages/WorkoutSuggest";
@@ -24,6 +25,10 @@ const routes = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/pt-home",
+        element: <PThome />,
       },
       {
         path: "/suggest",

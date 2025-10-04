@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useAuth from "../hooks/useAuth";
 import "../styles/pages/__auth.css";
 import authLogo from "../assets/auth.jpg";
 
 const Auth = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { login, register, isAuthenticated } = useAuth();
+  const { login, register, isAuthenticated, userRole } = useAuth();
   const [activeTab, setActiveTab] = useState("signin");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -22,11 +22,15 @@ const Auth = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    // Redirect if already authenticated
+    // Redirect if already authenticated based on role
     if (isAuthenticated) {
-      navigate("/");
+      if (userRole === "pt") {
+        navigate("/pt-home");
+      } else {
+        navigate("/");
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, userRole, navigate]);
 
   const [signInData, setSignInData] = useState({
     email: "",
@@ -66,7 +70,12 @@ const Auth = () => {
     const result = await login(signInData.email, signInData.password);
 
     if (result.success) {
-      navigate("/");
+      // Redirect based on user role
+      if (result.user?.role === "pt") {
+        navigate("/pt-home");
+      } else {
+        navigate("/");
+      }
     } else {
       setError(result.error);
     }
@@ -92,7 +101,12 @@ const Auth = () => {
     );
 
     if (result.success) {
-      navigate("/");
+      // Redirect based on user role
+      if (result.user?.role === "pt") {
+        navigate("/pt-home");
+      } else {
+        navigate("/");
+      }
     } else {
       setError(result.error);
     }

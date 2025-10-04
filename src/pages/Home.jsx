@@ -9,7 +9,7 @@
 // import eatTodayImage from "../assets/images/eat-today.png";
 // import homevip from "../assets/images/home_vip.png";
 // import { NavLink, useNavigate } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
+// import useAuth from "../hooks/useAuth";
 // import AIChatBox from "../components/AIChatBox";
 
 // const Home = () => {
@@ -308,7 +308,7 @@ import utilities3 from "../assets/images/utilities3.png";
 import eatTodayImage from "../assets/images/eat-today.png";
 import homevip from "../assets/images/home_vip.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useAuth from "../hooks/useAuth";
 import AIChatBox from "../components/AIChatBox";
 
 const Home = () => {
