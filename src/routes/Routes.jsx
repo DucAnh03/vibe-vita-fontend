@@ -12,6 +12,10 @@ import Profile from "../pages/Profile.jsx";
 import Bmi from "../pages/Bmi.jsx";
 import ListGyms from "../pages/ListGyms.jsx";
 import ListTrainers from "../pages/ListTrainers.jsx";
+import Vip1Page from "../pages/Vip1Page.jsx";
+import Vip2Page from "../pages/Vip2Page.jsx";
+import TrainersDetail from "../pages/TrainerDetail.jsx";
+import UserBookings from "../pages/UserBookings.jsx";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -64,6 +68,23 @@ const routes = createBrowserRouter([
       {
         path: "/list-trainers", // ✅ thêm route mới
         element: <ListTrainers />,
+      },
+      {
+        path: "/trainers/:id",
+        element: <TrainersDetail />,
+      },
+
+      {
+        path: "/vip1",
+        element: <Vip1Page />,
+      },
+      {
+        path: "/vip2",
+        element: <Vip2Page />,
+      },
+      {
+        path: "/my-bookings",
+        element: <UserBookings />,
       },
     ],
   },

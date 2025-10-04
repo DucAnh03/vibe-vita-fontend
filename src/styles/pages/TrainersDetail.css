@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap");
+
+.td-page,
+.td-page * {
+  font-family: "Inter", sans-serif;
+}
+
+.td-page {
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  padding: 40px 60px;
+}
+
+.td-title {
+  text-align: center;
+  color: #ff6b6b;
+  font-weight: 900;
+  font-size: 42px;
+  margin-bottom: 40px;
+}
+
+.td-container {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* LEFT */
+.td-left {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.td-back {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  background: none;
+  color: #ff6b6b;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.td-subtitle {
+  font-weight: 800;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.td-image-wrap img {
+  width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.td-name {
+  margin-top: 14px;
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.td-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: #ccc;
+  font-size: 14px;
+}
+
+/* RIGHT */
+.td-right {
+  flex: 1;
+  max-width: 800px;
+}
+
+.td-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+.td-info-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.td-schedule-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* TABLE */
+.td-schedule {
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.td-schedule table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ff6b6b;
+}
+
+.td-schedule th,
+.td-schedule td {
+  border: 1px solid #ff6b6b;
+  padding: 6px;
+  text-align: center;
+  font-size: 13px;
+  color: #fff;
+}
+
+.td-schedule .day {
+  font-weight: 700;
+  color: #ff6b6b;
+}
+
+/* Ô nhập dữ liệu */
+.td-schedule input {
+  width: 90%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+}
+
+.td-schedule input:focus {
+  background: rgba(255, 107, 107, 0.15);
+  border-radius: 4px;
+}
+
+/* Nút đặt */
+.td-btn {
+  background: #fff;
+  color: #ff6b6b;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 36px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.2s;
+  text-transform: uppercase;
+}
+.td-btn:hover {
+  background: #ff6b6b;
+  color: #fff;
+  transform: scale(1.05);
+}

@@ -21,7 +21,7 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 31.9422px;
   padding: 8px 16px;
   transition: transform 0.3s ease;
@@ -39,10 +39,10 @@
 }
 
 .logo_text {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 18px;
-  color: #FB5241;
+  color: #fb5241;
   text-decoration: none;
 }
 
@@ -57,12 +57,12 @@
 }
 
 .nav_item {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 25px;
   padding: 14px 20px;
   text-decoration: none;
   color: #000000;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
@@ -72,17 +72,16 @@
 }
 
 .nav_item:hover {
-  background-color: #FB5241;
-  color: #FFFFFF;
+  background-color: #fb5241;
+  color: #ffffff;
   transform: translateY(-2px);
 }
-
 
 /* Header Divider */
 .header_divider {
   width: 100%;
   height: 1px;
-  background-color: #E87C7C;
+  background-color: #e87c7c;
   margin-top: 0;
 }
 
@@ -91,7 +90,7 @@
   .header_navigation {
     gap: 15px;
   }
-  
+
   .nav_item {
     padding: 12px 16px;
     font-size: 18px;
@@ -116,7 +115,6 @@
     padding: 10px 14px;
     font-size: 16px;
   }
-
 }
 
 @media (max-width: 576px) {
@@ -129,5 +127,133 @@
     width: 100%;
     text-align: center;
   }
+}
+/* -------- VIP Section -------- */
+.app_home_vip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 40px;
+  background-color: #000;
+  color: #fff;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
+.vip_left {
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.vip_image {
+  width: 100%;
+  max-width: 100%; /* ✅ cho ảnh full theo chiều cột */
+  height: 100%; /* ✅ cao bằng container cha (sát bằng với thẻ VIP) */
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: -40px; /* ✅ đẩy sát lại gần các thẻ VIP hơn */
+}
+.vip_right {
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.vip_cards {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.vip_card {
+  font-family: "Inter", sans-serif; /* dùng Inter cho toàn card */
+}
+
+.vip_card h3 {
+  font-size: 22px;
+  font-weight: 700; /* đậm vừa giống nav_item */
+  color: #fff;
+}
+
+.vip_card li {
+  font-size: 15px;
+  font-weight: 500; /* trung bình, dễ đọc */
+  color: #ccc;
+  margin: 4px 0;
+}
+
+.vip_price {
+  font-size: 24px;
+  font-weight: 700; /* nổi bật như logo_text */
+  color: #ff3c00;
+  margin-top: 10px;
+  font-family: "Inter", sans-serif;
+}
+.vip_card {
+  border: 2px solid #ff3c00;
+  border-radius: 10px;
+  padding: 25px 35px;
+  width: 200px;
+  background-color: rgba(255, 255, 255, 0.05);
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.vip_card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(255, 60, 0, 0.4);
+}
+
+.vip_card h3 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.vip_card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vip_card li {
+  color: #ccc;
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.vip_price {
+  display: block;
+  color: #ff3c00;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.vip_btn {
+  background-color: #fdd;
+  color: #000;
+  font-family: "Inter", sans-serif; /* ✅ đồng bộ với header */
+  font-weight: 700; /* như .logo_text, .nav_item */
+  font-size: 20px; /* vừa phải, không quá to */
+  line-height: 24px;
+  padding: 14px 30px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase; /* in hoa toàn bộ */
+  letter-spacing: 1px; /* giãn nhẹ cho cân */
+}
+
+.vip_btn:hover {
+  background-color: #fb5241; /* cùng tone với header hover */
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(251, 82, 65, 0.6);
 }
