@@ -1,0 +1,23 @@
+.trainer-card {
+  border-radius: 16px;
+  background: #fff;
+}
+
+.trainer-card img {
+  object-fit: cover;
+  border: 3px solid #eee;
+}
+
+.trainer-card h3 {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.trainer-card p {
+  font-size: 0.9rem;
+}
+
+button.btn.btn-primary {
+  padding: 10px 22px;
+  font-weight: 500;
+}

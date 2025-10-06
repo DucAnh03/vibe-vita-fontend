@@ -17,6 +17,7 @@ import Vip1Page from "../pages/Vip1Page.jsx";
 import Vip2Page from "../pages/Vip2Page.jsx";
 import TrainersDetail from "../pages/TrainerDetail.jsx";
 import UserBookings from "../pages/UserBookings.jsx";
+import TrainerProfile from "../pages/TrainerProfile.jsx";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -90,6 +91,10 @@ const routes = createBrowserRouter([
       {
         path: "/my-bookings",
         element: <UserBookings />,
+      },
+      {
+        path: "/pt-profile",
+        element: <TrainerProfile />,
       },
     ],
   },

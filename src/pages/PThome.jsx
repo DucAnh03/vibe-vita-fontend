@@ -1,257 +1,131 @@
-import React, { useState, useEffect, useRef } from "react";
-import "../styles/pages/__home.css";
-import "../styles/pages/__pthome.css";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import AIChatBox from "../components/AIChatBox";
+import "../styles/pages/__pthome.css";
+
+// Fake data
+const students = [
+  { id: 1, name: "Nguyễn Văn A", progress: "70%", status: "Đang hoạt động" },
+  { id: 2, name: "Trần Thị B", progress: "45%", status: "Nghỉ tạm thời" },
+  { id: 3, name: "Lê Văn C", progress: "90%", status: "VIP" },
+];
+
+const bookings = [
+  { id: 1, student: "Nguyễn Văn A", date: "2024-09-15", time: "09:00 - 10:00" },
+  { id: 2, student: "Trần Thị B", date: "2024-09-15", time: "14:00 - 15:00" },
+  { id: 3, student: "Lê Văn C", date: "2024-09-16", time: "16:00 - 17:00" },
+];
 
 const PThome = () => {
-  const { user, logout, isAuthenticated } = useAuth();
-  const [showUserDropdown, setShowUserDropdown] = useState(false);
-  const dropdownRef = useRef(null);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowUserDropdown(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const ptUtilities = [
-    {
-      id: 1,
-      title: "QUẢN LÝ HỌC VIÊN",
-      image: "/src/assets/images/utilites1.png",
-    },
-    { id: 2, title: "LỊCH DẠY", image: "/src/assets/images/utilities2.png" },
-    {
-      id: 3,
-      title: "THỐNG KÊ DOANH THU",
-      image: "/src/assets/images/utilities3.png",
-    },
-  ];
-
-  const recentBookings = [
-    {
-      id: 1,
-      studentName: "Nguyễn Văn A",
-      time: "09:00 - 10:00",
-      date: "2024-01-15",
-    },
-    {
-      id: 2,
-      studentName: "Trần Thị B",
-      time: "14:00 - 15:00",
-      date: "2024-01-15",
-    },
-    {
-      id: 3,
-      studentName: "Lê Văn C",
-      time: "16:00 - 17:00",
-      date: "2024-01-15",
-    },
-  ];
+  const [activeTab, setActiveTab] = useState("profile");
 
   return (
-    <div className="pt_home d-flex flex-column">
-      <div className="app_home_container">
-        {/* Banner */}
-        <div className="pt_banner">
-          {/* User Info */}
-          {isAuthenticated && (
-            <div className="wrapper_user_info d-inline-flex p-2">
-              <div className="user_info_container" ref={dropdownRef}>
-                <div
-                  className="user_info"
-                  onClick={() => setShowUserDropdown(!showUserDropdown)}
-                >
-                  <div className="user_avatar">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <span className="user_name">
-                    {user?.username || user?.email}
-                  </span>
-                  <svg
-                    className={`dropdown_arrow ${
-                      showUserDropdown ? "rotated" : ""
-                    }`}
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M6 9l6 6 6-6"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
+    <div className="pt_dashboard">
+      {/* Sidebar */}
+      <aside className="pt_sidebar">
+        <h2>Trainer Panel</h2>
+        <ul>
+          <li onClick={() => navigate("/pt-profile")}>👤 Thông tin cá nhân</li>
+          <li onClick={() => setActiveTab("bookings")}>📅 Lịch sử đặt lịch</li>
+          <li onClick={() => setActiveTab("students")}>👥 Quản lý học viên</li>
+          <li className="logout" onClick={logout}>
+            🚪 Đăng xuất
+          </li>
+        </ul>
+      </aside>
 
-                {showUserDropdown && (
-                  <div className="user_dropdown">
-                    {/* Profile */}
-                    <button
-                      className="dropdown_item profile_item"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowUserDropdown(false);
-                        navigate("/profile");
-                      }}
-                    >
-                      <span>Profile</span>
-                    </button>
-
-                    {/* Logout */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowUserDropdown(false);
-                        logout();
-                      }}
-                      className="dropdown_item logout_item"
-                    >
-                      <span>Đăng xuất</span>
-                    </button>
-                  </div>
-                )}
+      {/* Main Content */}
+      <main className="pt_content">
+        {/* Profile */}
+        {activeTab === "profile" && (
+          <div className="pt_tab">
+            <h2>Thông tin cá nhân</h2>
+            <form className="profile_form">
+              <div className="form_group">
+                <label>Tên hiển thị</label>
+                <input type="text" defaultValue={user?.username || ""} />
               </div>
-            </div>
-          )}
-
-          {/* Banner main */}
-          <div className="wrapper_banner d-flex align-items-center justify-content-between gap-3">
-            <div className="banner_overlay"></div>
-            <div className="banner_content w-100 h-100 d-flex flex-column align-items-start justify-content-center">
-              <h2 className="d-flex flex-column align-items-start gap-2">
-                <span className="highlight-red">WELCOME</span>
-                <span className="highlight">PERSONAL TRAINER</span>
-              </h2>
-              <h2 className="d-flex align-items-center gap-2">
-                <span className="highlight">MANAGE YOUR</span>
-                <span className="highlight-bold">STUDENTS</span>
-              </h2>
-              <p>
-                Quản lý học viên, lịch dạy và theo dõi tiến độ của từng học viên
-                một cách hiệu quả. Tạo ra những chương trình tập luyện phù hợp
-                với từng cá nhân.
-              </p>
-              <button
-                className="btn_guide"
-                onClick={() => navigate("/list-trainers")}
-              >
-                QUẢN LÝ HỌC VIÊN
-              </button>
-            </div>
-            <div className="banner_image_wrapper">
-              <img
-                src="/src/assets/images/Mask group.png"
-                alt="Banner chính"
-                className="banner_main"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* PT Tools */}
-        <div className="pt_utilities">
-          <h2 className="pt_utilities_title">CÔNG CỤ PT</h2>
-          <ul className="pt_utilities_list">
-            {ptUtilities.map((item) => (
-              <li key={item.id} className="pt_utilities_item">
-                <h3>{item.title}</h3>
-                <p>Quản lý và theo dõi hiệu quả</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Recent Bookings */}
-        <div className="booking_section">
-          <h2 className="booking_title">LỊCH DẠY HÔM NAY</h2>
-          <p className="eat_today_desc">
-            Xem lịch dạy và thông tin học viên trong ngày hôm nay.
-          </p>
-
-          <ul className="booking_list">
-            {recentBookings.map((booking) => (
-              <li key={booking.id} className="booking_item">
-                <div className="booking_info">
-                  <h4>{booking.studentName}</h4>
-                  <p>Thời gian: {booking.time}</p>
-                  <p>Ngày: {booking.date}</p>
-                </div>
-                <div className="booking_stats">
-                  <span>📅 {booking.time}</span>
-                  <span>👤 {booking.studentName}</span>
-                </div>
-                <button className="btn_pt_secondary">XEM CHI TIẾT</button>
-              </li>
-            ))}
-          </ul>
-
-          <div style={{ textAlign: "center", marginTop: "2rem" }}>
-            <button className="btn_pt_primary">XEM TẤT CẢ LỊCH DẠY</button>
-          </div>
-        </div>
-
-        {/* Statistics Section */}
-        <div className="pt_stats">
-          <div className="container">
-            <h2 className="booking_title" style={{ color: "white" }}>
-              THỐNG KÊ HOẠT ĐỘNG
-            </h2>
-            <div className="pt_stats_cards">
-              <div className="pt_stats_card">
-                <h3>HỌC VIÊN HOẠT ĐỘNG</h3>
-                <ul>
-                  <li>Tổng học viên: 25</li>
-                  <li>Học viên mới: 3</li>
-                  <li>Học viên VIP: 8</li>
-                  <li>Đánh giá trung bình: 4.8/5</li>
-                </ul>
-                <span className="pt_stats_price">25</span>
+              <div className="form_group">
+                <label>Email</label>
+                <input type="email" defaultValue={user?.email || ""} />
               </div>
-
-              <div className="pt_stats_card">
-                <h3>DOANH THU THÁNG</h3>
-                <ul>
-                  <li>Tháng này: 15,000,000 VNĐ</li>
-                  <li>So với tháng trước: +12%</li>
-                  <li>Lịch dạy: 45 buổi</li>
-                  <li>Tỷ lệ hoàn thành: 98%</li>
-                </ul>
-                <span className="pt_stats_price">15M</span>
+              <div className="form_group">
+                <label>Số điện thoại</label>
+                <input type="text" placeholder="Nhập số điện thoại" />
               </div>
-            </div>
-
-            <div style={{ textAlign: "center", marginTop: "2rem" }}>
-              <button className="btn_pt_primary">XEM BÁO CÁO CHI TIẾT</button>
-            </div>
+              <div className="form_group">
+                <label>Ngày sinh</label>
+                <input type="date" />
+              </div>
+              <button className="btn_pt_primary">Cập nhật</button>
+            </form>
           </div>
-        </div>
-      </div>
+        )}
 
-      {/* AI Chatbox */}
-      <AIChatBox />
+        {/* Bookings */}
+        {activeTab === "bookings" && (
+          <div className="pt_tab">
+            <h2>Lịch sử đặt lịch</h2>
+            <table className="pt_table">
+              <thead>
+                <tr>
+                  <th>Học viên</th>
+                  <th>Ngày</th>
+                  <th>Thời gian</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.map((b) => (
+                  <tr key={b.id}>
+                    <td>{b.student}</td>
+                    <td>{b.date}</td>
+                    <td>{b.time}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* Students */}
+        {activeTab === "students" && (
+          <div className="pt_tab">
+            <h2>Quản lý học viên</h2>
+            <table className="pt_table">
+              <thead>
+                <tr>
+                  <th>Tên học viên</th>
+                  <th>Tiến độ</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((s) => (
+                  <tr key={s.id}>
+                    <td>{s.name}</td>
+                    <td>{s.progress}</td>
+                    <td>{s.status}</td>
+                    <td>
+                      <button className="btn_pt_secondary">Chi tiết</button>
+                      <button className="btn_pt_primary">Cập nhật</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button
+              className="btn_pt_primary"
+              style={{ marginTop: "1rem" }}
+              onClick={() => navigate("/update")}
+            >
+              + Thêm học viên
+            </button>
+          </div>
+        )}
+      </main>
     </div>
   );
 };
