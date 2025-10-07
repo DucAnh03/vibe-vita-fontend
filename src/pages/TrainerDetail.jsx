@@ -111,7 +111,11 @@ export default function TrainerDetail() {
       <div className="td-container">
         {/* LEFT */}
         <div className="td-left">
-          <button className="td-back" onClick={() => navigate(-1)}>
+          {/* ✅ Nút quay lại — luôn trở về trang danh sách PT */}
+          <button
+            className="td-back"
+            onClick={() => navigate("/list-trainers")}
+          >
             ← Quay lại
           </button>
 

@@ -152,7 +152,7 @@ export default function ListTrainers() {
 
             <button
               className="lt-btn lt-btn--ghost"
-              onClick={() => navigate(`/trainers/${t._id}`)}
+              onClick={() => navigate(`/trainer-payment/${t._id}`)}
             >
               XEM CHI TIẾT
             </button>

@@ -1,0 +1,141 @@
+.tp-page {
+  color: #fff;
+  padding: 50px;
+}
+
+.tp-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #00e5a8;
+}
+
+.tp-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* LEFT PANEL */
+.tp-left {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  background: #1a1a1a;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 255, 200, 0.15);
+}
+
+.tp-back {
+  background: none;
+  color: #00e5a8;
+  border: none;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.tp-back:hover {
+  color: #fff;
+}
+
+.tp-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.tp-image-wrap {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.tp-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tp-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.tp-rating {
+  color: #ffc107;
+  margin-top: 5px;
+}
+
+/* RIGHT PANEL */
+.tp-right {
+  flex: 2;
+  background: #111;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+}
+
+.tp-info-list {
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.tp-info-list li {
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+.tp-upgrade-section {
+  background: #181818;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 255, 200, 0.1);
+}
+
+.tp-schedule-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #00e5a8;
+  margin-bottom: 15px;
+}
+
+.tp-desc {
+  color: #ccc;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.tp-price {
+  display: block;
+  font-weight: 700;
+  color: #00e5a8;
+  margin-top: 5px;
+}
+
+.tp-btn {
+  background: linear-gradient(135deg, #00e5a8, #00b894);
+  color: #fff;
+  font-weight: 700;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.tp-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 229, 168, 0.5);
+}
