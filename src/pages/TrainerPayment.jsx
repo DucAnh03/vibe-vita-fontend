@@ -10,43 +10,65 @@ export default function TrainerPayment() {
   const [trainer, setTrainer] = useState(null);
   const [paying, setPaying] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("");
 
-  // ✅ Lấy thông tin user đang đăng nhập
+  // ✅ Lấy thông tin user
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const userId = currentUser?._id || currentUser?.id;
-  const paidKey = `paidPTs_${userId}`; // mỗi user có danh sách PT riêng
+  const paidKey = `paidPTs_${userId}`;
 
-  // ✅ Kiểm tra nếu PT này đã được thanh toán bởi user hiện tại
+  // ✅ Kiểm tra nếu PT đã thanh toán
   useEffect(() => {
     if (!userId) return;
     const paidPTs = JSON.parse(localStorage.getItem(paidKey)) || [];
     if (paidPTs.includes(id)) {
       setIsPaid(true);
-      setTimeout(() => navigate(`/trainers/${id}`), 1200); // tự chuyển sau 1.2s
+      setTimeout(() => navigate(`/trainers/${id}`), 1200);
     }
   }, [id, navigate, userId, paidKey]);
 
-  // ✅ Lấy thông tin PT
+  // ✅ Lấy thông tin PT (với ảnh đầy đủ)
   useEffect(() => {
     const fetchTrainer = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/auth/trainers");
+        const res = await fetch(
+          `http://localhost:5000/api/auth/trainers/${id}`
+        );
+        if (!res.ok) throw new Error("Không tìm thấy PT");
         const data = await res.json();
-        const found = data.find((t) => t._id === id);
-        setTrainer(found || null);
+
+        // ✅ Gắn prefix đường dẫn ảnh nếu cần
+        const fullImage =
+          data.image && !data.image.startsWith("http")
+            ? `http://localhost:5000${data.image}`
+            : data.image;
+
+        setTrainer({ ...data, image: fullImage });
       } catch (err) {
         console.error("❌ Lỗi khi load trainer:", err);
+        setTrainer(null);
       }
     };
     fetchTrainer();
   }, [id]);
 
-  // ✅ Bắt đầu thanh toán
+  // ✅ Danh sách 3 gói Premium
+  const plans = [
+    { id: "oneDay", name: "Gói 1 Ngày - 20.000đ" },
+    { id: "threeToSevenDays", name: "Gói 7 Ngày - 40.000đ" },
+    { id: "monthly", name: "Gói 1 Tháng - 60.000đ" },
+  ];
+
+  // ✅ Thanh toán
   const handlePayment = async () => {
     try {
       if (!token) {
         alert("Vui lòng đăng nhập để thanh toán.");
         navigate("/login");
+        return;
+      }
+      if (!selectedPlan) {
+        alert("Vui lòng chọn gói để thanh toán.");
         return;
       }
 
@@ -60,16 +82,14 @@ export default function TrainerPayment() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          amount: 50000,
-          packageType: "monthly",
-          returnUrl: `${window.location.origin}/payment-success`,
+          packageType: selectedPlan,
         }),
       });
 
       const data = await res.json();
       if (!data.success) throw new Error(data.message);
 
-      // ✅ Chuyển qua trang thanh toán PayOS
+      // ✅ Chuyển qua trang PayOS
       window.location.href = data.data.checkoutUrl;
     } catch (err) {
       alert("❌ Lỗi tạo link thanh toán: " + err.message);
@@ -87,12 +107,14 @@ export default function TrainerPayment() {
     );
   }
 
-  if (!trainer)
+  if (!trainer) {
     return (
-      <h2 style={{ color: "#fff", padding: "40px" }}>Không tìm thấy PT này</h2>
+      <h2 style={{ color: "#fff", padding: "40px" }}>
+        ❌ Không tìm thấy huấn luyện viên
+      </h2>
     );
+  }
 
-  // ✅ Giao diện đẹp, đồng bộ với TrainerDetail
   return (
     <div className="tp-page">
       <h1 className="tp-title">NÂNG CẤP DỊCH VỤ HUẤN LUYỆN VIÊN</h1>
@@ -110,11 +132,20 @@ export default function TrainerPayment() {
           <h2 className="tp-subtitle">THÔNG TIN HUẤN LUYỆN VIÊN</h2>
           <div className="tp-image-wrap">
             <img
-              src={trainer.image || "https://via.placeholder.com/400"}
+              src={
+                trainer.image ||
+                "https://via.placeholder.com/400x400?text=No+Image"
+              }
               alt={trainer.username}
+              onError={(e) =>
+                (e.target.src =
+                  "https://via.placeholder.com/400x400?text=No+Image")
+              }
             />
           </div>
-          <div className="tp-name">{trainer.username}</div>
+          <div className="tp-name">
+            {trainer.username?.toUpperCase() || "HUẤN LUYỆN VIÊN"}
+          </div>
           <div className="tp-rating">⭐ {trainer.rating || 5}/5.0</div>
         </div>
 
@@ -128,24 +159,32 @@ export default function TrainerPayment() {
 
           <div className="tp-upgrade-section">
             <h3 className="tp-schedule-title">
-              🚀 Nâng cấp gói Premium để đặt lịch và sử dụng các tính năng cao
-              cấp
+              🚀 Chọn gói Premium để đặt lịch và mở khóa tính năng cao cấp
             </h3>
-            <p className="tp-desc">
-              Khi nâng cấp, bạn có thể chat trực tiếp với PT, đặt lịch linh
-              hoạt, và theo dõi tiến độ tập luyện của mình.
-              <br />
-              <span className="tp-price">
-                💰 Gói Premium chỉ 50.000đ / tháng
-              </span>
-            </p>
+
+            <select
+              className="tp-select"
+              value={selectedPlan}
+              onChange={(e) => setSelectedPlan(e.target.value)}
+            >
+              <option value="">-- Chọn gói Premium --</option>
+              {plans.map((plan) => (
+                <option key={plan.id} value={plan.id}>
+                  {plan.name}
+                </option>
+              ))}
+            </select>
 
             <button
               className="tp-btn"
               onClick={handlePayment}
               disabled={paying}
             >
-              {paying ? "ĐANG TẠO LINK..." : "THANH TOÁN NGAY"}
+              {paying
+                ? "ĐANG TẠO LINK..."
+                : selectedPlan
+                ? "THANH TOÁN NGAY"
+                : "CHỌN GÓI TRƯỚC"}
             </button>
           </div>
         </div>

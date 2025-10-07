@@ -1,286 +1,316 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Form, Button, Card, Spinner, Alert } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import "../styles/pages/Profile.css";
 
-const API_BASE = "http://localhost:5000"; // đổi nếu bạn deploy
+const API_BASE = "http://localhost:5000";
 
 export default function Profile() {
-  const [user, setUser] = useState({ username: "", email: "", phone: "" });
-  const [initialUser, setInitialUser] = useState({
-    username: "",
-    email: "",
-    phone: "",
-  });
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
-  const [loading, setLoading] = useState(false); // loading khi submit
-  const [fetching, setFetching] = useState(true); // loading khi fetch me
-  const [msg, setMsg] = useState({ type: "", text: "" }); // success | danger | ""
-  const [touched, setTouched] = useState({
-    username: false,
-    email: false,
-    phone: false,
-  });
+  const fileInputRef = useRef(null);
+  const token = localStorage.getItem("token");
 
-  // Validate cơ bản
-  const emailValid = useMemo(
-    () => /^\S+@\S+\.\S+$/.test(user.email || ""),
-    [user.email]
-  );
-  const phoneValid = useMemo(
-    () => /^([0-9]{10,11})$/.test(user.phone || ""),
-    [user.phone]
-  );
-
-  const isChanged = useMemo(
-    () =>
-      user.username !== initialUser.username ||
-      user.email !== initialUser.email ||
-      user.phone !== initialUser.phone,
-    [user, initialUser]
-  );
-
-  // Tải thông tin user hiện tại: GET /api/auth/me (trả { user: {...} })
+  // 🔹 Lấy dữ liệu user
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchProfile = async () => {
       try {
-        setFetching(true);
-        setMsg({ type: "", text: "" });
-
-        const res = await fetch(`${API_BASE}/api/auth/me`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+        const res = await fetch(`${API_BASE}/api/auth/profile/me`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
+        const result = await res.json();
 
-        const data = await res.json();
-
-        if (res.ok && data?.user) {
-          const payload = {
-            username: data.user.username || "",
-            email: data.user.email || "",
-            phone: data.user.phone || "",
+        if (res.ok) {
+          const defaultHealth = {
+            gender: "",
+            weight: "",
+            height: "",
+            bmi: "",
+            bmiCategory: "",
           };
-          setUser(payload);
-          setInitialUser(payload);
-        } else {
-          setMsg({
-            type: "danger",
-            text: data?.message || "Không thể tải thông tin người dùng.",
-          });
+          const safeData = {
+            ...result.data,
+            healthInfo: result.data.healthInfo || defaultHealth,
+          };
+          setData(safeData);
         }
       } catch (err) {
-        console.error("❌ /api/auth/me error:", err);
-        setMsg({ type: "danger", text: "Không thể kết nối tới server." });
+        console.error("Lỗi tải profile:", err);
+        setMessage({
+          text: "❌ Không thể tải thông tin người dùng!",
+          type: "error",
+        });
       } finally {
-        setFetching(false);
+        setLoading(false);
       }
     };
-
-    fetchUser();
+    fetchProfile();
   }, []);
 
-  // Handlers
+  // 🔔 Alert tự ẩn
+  useEffect(() => {
+    if (message.text) {
+      const timer = setTimeout(() => setMessage({ text: "", type: "" }), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  // ✅ Xử lý thay đổi input user
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setMsg({ type: "", text: "" });
-    setUser((prev) => ({ ...prev, [name]: value }));
+    setData((prev) => ({
+      ...prev,
+      user: { ...prev.user, [name]: value },
+    }));
   };
 
-  const handleBlur = (e) => {
-    const { name } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
+  // ✅ Xử lý thay đổi thông tin sức khỏe
+  const handleHealthChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      healthInfo: { ...(prev.healthInfo || {}), [name]: value },
+    }));
   };
 
-  // Submit cập nhật: PUT /api/auth/profile
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMsg({ type: "", text: "" });
-
-    if (!user.username?.trim()) {
-      return setMsg({
-        type: "danger",
-        text: "Tên người dùng không được để trống.",
-      });
-    }
-    if (!emailValid) {
-      return setMsg({ type: "danger", text: "Email không hợp lệ." });
-    }
-    if (user.phone && !phoneValid) {
-      return setMsg({
-        type: "danger",
-        text: "Số điện thoại phải gồm 10–11 chữ số.",
-      });
-    }
-
+  // ✅ Cập nhật thông tin
+  const handleSave = async () => {
+    setUpdating(true);
     try {
-      setLoading(true);
+      const payload = {
+        ...data.user,
+        healthInfo: data.healthInfo,
+      };
       const res = await fetch(`${API_BASE}/api/auth/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          username: user.username.trim(),
-          email: user.email.trim(),
-          phone: user.phone.trim(),
-          // nếu muốn gửi thêm dateOfBirth/gender/height/weight thì thêm vào đây
-        }),
+        body: JSON.stringify(payload),
       });
-
-      const data = await res.json();
-
-      if (res.ok && data?.data?.user) {
-        const updated = {
-          username: data.data.user.username || "",
-          email: data.data.user.email || "",
-          phone: data.data.user.phone || "",
-        };
-        setUser(updated);
-        setInitialUser(updated);
-        setTouched({ username: false, email: false, phone: false });
-        setMsg({
-          type: "success",
-          text: data.message || "Cập nhật thông tin thành công!",
-        });
+      const result = await res.json();
+      if (res.ok) {
+        setData(result.data);
+        setMessage({ text: "✅ Cập nhật thành công!", type: "success" });
       } else {
-        setMsg({
-          type: "danger",
-          text: data?.message || "Không thể cập nhật thông tin.",
-        });
+        setMessage({ text: "❌ Cập nhật thất bại!", type: "error" });
       }
     } catch (err) {
-      console.error("❌ /api/auth/profile error:", err);
-      setMsg({ type: "danger", text: "Không thể kết nối tới server." });
+      console.error("Lỗi:", err);
+      setMessage({ text: "❌ Có lỗi xảy ra!", type: "error" });
     } finally {
-      setLoading(false);
+      setUpdating(false);
     }
   };
 
-  const handleReset = () => {
-    setUser(initialUser);
-    setMsg({ type: "", text: "" });
-    setTouched({ username: false, email: false, phone: false });
+  // ✅ Upload avatar
+  const handleUploadAvatar = async (file) => {
+    if (!file) return;
+    const allowed = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowed.includes(file.type))
+      return setMessage({ text: "❌ File không hợp lệ!", type: "error" });
+    if (file.size > 5 * 1024 * 1024)
+      return setMessage({ text: "❌ Ảnh vượt quá 5MB!", type: "error" });
+
+    const previewURL = URL.createObjectURL(file);
+    setPreview(previewURL);
+    setUploading(true);
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/upload-avatar`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const result = await res.json();
+      if (res.ok) {
+        setData((prev) => ({ ...prev, user: result.user }));
+        setMessage({ text: "✅ Ảnh đại diện đã cập nhật!", type: "success" });
+      } else {
+        setMessage({ text: "❌ Upload thất bại!", type: "error" });
+      }
+    } catch {
+      setMessage({ text: "❌ Lỗi upload ảnh!", type: "error" });
+    } finally {
+      setUploading(false);
+    }
   };
 
+  const handleChooseFile = () => {
+    if (fileInputRef.current && !uploading) fileInputRef.current.click();
+  };
+
+  if (loading)
+    return (
+      <div className="profile-loading">
+        <div className="spinner" /> Đang tải thông tin...
+      </div>
+    );
+
+  const { user, healthInfo } = data;
+
   return (
-    <div className="container mt-5 d-flex justify-content-center">
-      <Card
-        style={{ width: "60rem", padding: "3rem" }}
-        className="shadow-lg rounded-4"
-      >
-        <Card.Body>
-          <Card.Title className="text-center mb-4 fw-bold fs-1">
-            Cập nhật thông tin cá nhân
-          </Card.Title>
+    <div className="profile-container">
+      {/* Avatar */}
+      <div className="profile-header">
+        <div className="avatar-wrapper" onClick={handleChooseFile}>
+          <img
+            src={
+              preview
+                ? preview
+                : user.image
+                ? `${API_BASE}${user.image}`
+                : "https://via.placeholder.com/200x200?text=Avatar"
+            }
+            alt="avatar"
+            className="avatar-img"
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={(e) => handleUploadAvatar(e.target.files[0])}
+          />
+          {uploading && <p className="uploading-text">Đang tải ảnh...</p>}
+        </div>
+      </div>
 
-          {msg.text ? (
-            <Alert
-              variant={msg.type === "success" ? "success" : "danger"}
-              className="mb-4"
-              dismissible
-              onClose={() => setMsg({ type: "", text: "" })}
-            >
-              {msg.text}
-            </Alert>
-          ) : null}
+      {/* Nội dung chính */}
+      <div className="profile-right">
+        <h1 className="hello-text">
+          XIN CHÀO, <span>{user.username?.toUpperCase()}!</span>
+        </h1>
 
-          {fetching ? (
-            <div className="text-center py-4">
-              <Spinner animation="border" />
-              <p className="mt-3 mb-0">Đang tải thông tin...</p>
-            </div>
-          ) : (
-            <Form onSubmit={handleSubmit} noValidate>
-              {/* Username */}
-              <Form.Group className="mb-4" controlId="formUsername">
-                <Form.Label className="fw-semibold fs-5">
-                  Tên người dùng
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="username"
-                  value={user.username}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className="p-3 fs-5"
-                  isInvalid={touched.username && !user.username?.trim()}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Vui lòng nhập tên người dùng.
-                </Form.Control.Feedback>
-              </Form.Group>
+        {message.text && (
+          <div
+            className={`alert-message ${
+              message.type === "error" ? "error" : "success"
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
 
-              {/* Email */}
-              <Form.Group className="mb-4" controlId="formEmail">
-                <Form.Label className="fw-semibold fs-5">
-                  Địa chỉ Email
-                </Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  value={user.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className="p-3 fs-5"
-                  isInvalid={touched.email && !!user.email && !emailValid}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Email không hợp lệ.
-                </Form.Control.Feedback>
-              </Form.Group>
+        {/* =================== THÔNG TIN CÁ NHÂN =================== */}
+        <section className="info-section">
+          <h3>THÔNG TIN CÁ NHÂN</h3>
 
-              {/* Phone */}
-              <Form.Group className="mb-4" controlId="formPhone">
-                <Form.Label className="fw-semibold fs-5">
-                  Số điện thoại
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="phone"
-                  value={user.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className="p-3 fs-5"
-                  isInvalid={touched.phone && !!user.phone && !phoneValid}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Số điện thoại phải gồm 10–11 chữ số.
-                </Form.Control.Feedback>
-                <Form.Text muted>Tùy chọn, có thể để trống.</Form.Text>
-              </Form.Group>
+          <div className="info-row">
+            <p>Tên của bạn</p>
+            <input
+              name="username"
+              value={user.username || ""}
+              onChange={handleChange}
+            />
+          </div>
 
-              <div className="d-flex justify-content-center gap-3 mt-4">
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={loading || !isChanged}
-                  className="px-5 py-3 fs-5"
-                >
-                  {loading ? (
-                    <>
-                      <Spinner size="sm" className="me-2" /> Đang lưu...
-                    </>
-                  ) : (
-                    "Lưu thay đổi"
-                  )}
-                </Button>
+          <div className="info-row">
+            <p>Email</p>
+            <input
+              name="email"
+              type="email"
+              value={user.email || ""}
+              onChange={handleChange}
+            />
+          </div>
 
-                <Button
-                  variant="outline-secondary"
-                  type="button"
-                  className="px-5 py-3 fs-5"
-                  onClick={handleReset}
-                  disabled={loading || !isChanged}
-                >
-                  Hoàn tác
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Card.Body>
-      </Card>
+          <div className="info-row">
+            <p>Số điện thoại</p>
+            <input
+              name="phone"
+              value={user.phone || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="info-row">
+            <p>Ngày sinh</p>
+            <input
+              name="dateOfBirth"
+              type="date"
+              value={
+                user.dateOfBirth
+                  ? new Date(user.dateOfBirth).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={handleChange}
+            />
+          </div>
+        </section>
+
+        {/* =================== THÔNG SỐ SỨC KHỎE =================== */}
+        <section className="info-section">
+          <h3>THÔNG SỐ SỨC KHỎE</h3>
+
+          <div className="info-row">
+            <p>Giới tính</p>
+            <input
+              name="gender"
+              value={healthInfo?.gender || ""}
+              onChange={handleHealthChange}
+            />
+          </div>
+
+          <div className="info-row">
+            <p>Cân nặng (kg)</p>
+            <input
+              name="weight"
+              type="number"
+              value={healthInfo?.weight || ""}
+              onChange={handleHealthChange}
+            />
+          </div>
+
+          <div className="info-row">
+            <p>Chiều cao (cm)</p>
+            <input
+              name="height"
+              type="number"
+              value={healthInfo?.height || ""}
+              onChange={handleHealthChange}
+            />
+          </div>
+
+          <div className="info-row">
+            <p>BMI</p>
+            <input
+              readOnly
+              value={
+                healthInfo?.bmi
+                  ? `${healthInfo.bmi} (${healthInfo.bmiCategory})`
+                  : "—"
+              }
+              className="readonly-input"
+            />
+          </div>
+        </section>
+
+        {/* =================== GÓI ĐĂNG KÍ CỦA TÔI =================== */}
+        <section className="info-section">
+          <h3>
+            GÓI ĐĂNG KÍ CỦA TÔI{" "}
+            {user.isPremium ? (
+              <span className="vip-text">VIP</span>
+            ) : (
+              <span className="not-vip">CHƯA ĐĂNG KÍ</span>
+            )}
+          </h3>
+        </section>
+
+        <div className="btn-save-container">
+          <button className="btn-save" onClick={handleSave} disabled={updating}>
+            {updating ? "Đang lưu..." : "💾 Lưu thông tin"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

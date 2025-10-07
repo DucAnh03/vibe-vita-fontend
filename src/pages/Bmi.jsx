@@ -96,7 +96,7 @@ export default function BMI() {
         )}
       </form>
       {/* Hai nút gợi ý nằm ngoài form */}
-      const navigate = useNavigate();
+      {/* const navigate = useNavigate(); */}
       <div className="bmi-extra-buttons">
         <button
           type="button"

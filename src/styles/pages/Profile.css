@@ -1,0 +1,270 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+* {
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+}
+
+/* ===============================
+   ⚙️ Layout chính
+================================= */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #000;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+
+/* ===============================
+   🧍‍♂️ Avatar
+================================= */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 4rem;
+  width: 100%;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.avatar-img {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #333;
+  box-shadow: 0 0 80px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.avatar-wrapper:hover .avatar-img {
+  transform: scale(1.05);
+  box-shadow: 0 0 100px rgba(255, 255, 255, 0.2);
+}
+
+.uploading-text {
+  color: #777;
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+}
+
+/* Ẩn tên */
+.profile-name {
+  display: none !important;
+}
+
+/* ===============================
+   🧾 Khung nội dung
+================================= */
+.profile-right {
+  width: 92%;
+  max-width: 950px;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 4rem 4.5rem;
+  box-shadow: 0 0 70px rgba(255, 255, 255, 0.05);
+}
+
+/* Giữ nguyên “Xin chào” */
+.hello-text {
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #eaeaea;
+  margin-bottom: 3.5rem;
+  text-transform: uppercase;
+}
+
+.hello-text span {
+  color: #888;
+  font-weight: 500;
+}
+
+/* ===============================
+   🔔 Alert
+================================= */
+.alert-message {
+  padding: 1.4rem 1.6rem;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-bottom: 2.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.alert-message.error {
+  color: #ff6b6b;
+}
+
+.alert-message.success {
+  color: #52ffa1;
+}
+
+/* ===============================
+   📋 Form
+================================= */
+.info-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+.info-section h3 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #f1f1f1;
+  letter-spacing: 0.5px;
+}
+
+/* Hàng thông tin */
+.info-row {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.info-row p {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #ddd;
+  font-weight: 600;
+}
+
+.info-row input,
+.info-row textarea {
+  width: 100%;
+  background: #0f0f0f;
+  border: 1px solid #222;
+  color: #f5f5f5;
+  border-radius: 14px;
+  padding: 1.3rem 1.5rem;
+  font-size: 1.5rem;
+  transition: all 0.25s ease;
+}
+
+.info-row input:focus,
+.info-row textarea:focus {
+  border-color: #aaa;
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* Ô chỉ đọc */
+.readonly-input {
+  background: #111;
+  border: 1px solid #333;
+  color: #aaa;
+  border-radius: 14px;
+  padding: 1.3rem 1.5rem;
+  font-size: 1.5rem;
+  pointer-events: none;
+}
+
+/* ===============================
+   💾 Nút lưu
+================================= */
+.btn-save-container {
+  text-align: center;
+  margin-top: 3.5rem;
+}
+
+.btn-save {
+  background: #1a1a1a;
+  color: #fff;
+  font-weight: 700;
+  border: 1px solid #333;
+  padding: 1.4rem 3rem;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+}
+
+.btn-save:hover {
+  background: #222;
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+/* ===============================
+   🔄 Spinner
+================================= */
+.spinner {
+  border: 5px solid #333;
+  border-top: 5px solid #999;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===============================
+   📱 Responsive
+================================= */
+@media (max-width: 950px) {
+  .profile-right {
+    padding: 2.5rem 2rem;
+    width: 100%;
+  }
+
+  .info-row {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .info-row p {
+    font-size: 1.3rem;
+  }
+
+  .info-row input {
+    font-size: 1.2rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .avatar-img {
+    width: 200px;
+    height: 200px;
+  }
+}
+.vip-text {
+  color: #ff4b3e;
+  font-weight: 800;
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+
+.not-vip {
+  color: #888;
+  font-weight: 600;
+  margin-left: 10px;
+}

@@ -1,195 +1,138 @@
-/* --- Import font Inter trực tiếp từ Google Fonts --- */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-/* TOÀN TRANG DÙNG INTER */
-.lt-page,
-.lt-page * {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.4px;
+* {
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
 }
 
-/* TRANG */
-.lt-page {
-  min-height: 100vh;
+body {
   background: #000;
-  padding: 40px 20px 80px;
   color: #fff;
 }
 
-/* GRID */
+.lt-page {
+  padding: 3rem;
+  background: #000;
+  min-height: 100vh;
+}
+
+.lt-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ff4747;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== Grid ===== */
 .lt-grid {
-  max-width: 1220px;
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 36px;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 2rem;
+  justify-content: center;
 }
 
-/* CARD */
+/* ===== Card ===== */
 .lt-card {
-  background: transparent;
-  border-radius: 28px;
-  padding: 8px 10px 22px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: #0f0f0f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 70, 70, 0.05);
 }
 
-/* ẢNH */
-.lt-image-wrap {
-  border-radius: 24px;
-  overflow: hidden;
-  background: #0f0f0f;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65);
+.lt-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(255, 70, 70, 0.3);
 }
+
+/* ===== Ảnh ===== */
+.lt-image-wrap {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 1rem;
+  border: 3px solid #ff4747;
+  box-shadow: 0 0 20px rgba(255, 70, 70, 0.2);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.lt-image-wrap:hover {
+  transform: scale(1.05);
+}
+
 .lt-image {
   width: 100%;
-  height: 360px;
+  height: 100%;
   object-fit: cover;
-  display: block;
 }
 
-/* TÊN */
+/* ===== Tên ===== */
 .lt-name {
-  width: 86%;
-  margin: 14px auto 10px;
-  background: #ff6b6b;
-  color: #fff;
-  text-align: center;
-  padding: 12px 20px;
-  border-radius: 999px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  font-size: 16px;
-  box-shadow: 0 12px 24px rgba(255, 90, 90, 0.28);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
-/* META */
+/* ===== Meta ===== */
 .lt-meta {
-  width: 86%;
-  margin: 0 auto 14px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 18px;
-  row-gap: 10px;
+  color: #ccc;
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
 }
+
 .lt-line {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.92);
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  gap: 0.4rem;
+  justify-content: center;
+  margin: 0.3rem 0;
 }
+
 .lt-line svg {
-  color: #ff6b6b;
+  color: #ffb800;
 }
 
-/* NÚT XEM CHI TIẾT */
-.lt-btn.lt-btn--ghost {
-  display: block;
-  width: 86%;
-  margin: 8px auto 0;
-  height: 44px;
-  border-radius: 999px;
+/* ===== Button ===== */
+.lt-btn {
   border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 10px;
+  background: #ff4747;
+  color: #fff;
+  font-weight: 700;
   cursor: pointer;
+  transition: 0.3s;
   text-transform: uppercase;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 0.8px;
-  color: #ff6b6b;
-  background: #fff;
-  box-shadow: 0 8px 18px rgba(255, 90, 90, 0.28);
-  transition: transform 0.15s ease, filter 0.2s ease;
-}
-.lt-btn.lt-btn--ghost:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.03);
 }
 
-/* RESPONSIVE */
-@media (max-width: 1200px) {
-  .lt-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.lt-btn:hover {
+  background: #ff5f5f;
 }
-@media (max-width: 720px) {
-  .lt-grid {
-    grid-template-columns: 1fr;
-  }
-  .lt-image {
-    height: 340px;
-  }
-  .lt-meta {
-    grid-template-columns: 1fr;
-  }
+
+.lt-btn--ghost {
+  background: transparent;
+  border: 1px solid #ff4747;
+  color: #ff4747;
 }
-/* --- Nút Quay lại --- */
-.td-back {
-  position: absolute;
-  top: -85px;
-  left: -5px;
-  background: #ff6b6b;
+
+.lt-btn--ghost:hover {
+  background: #ff4747;
   color: #fff;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
 }
 
-.td-back:hover {
-  background: #fff;
-  color: #ff3b3b;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(255, 107, 107, 0.6);
-}
-/* 1) BẮT BUỘC: Cha phải là relative để tuyệt đối bám theo */
-.td-left {
-  position: relative; /* <- nếu thiếu dòng này thì top/left không ăn */
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* giữ nguyên các thuộc tính khác bạn đã có */
-}
-
-/* 2) Nút quay lại: ép lên cao hơn và ưu tiên áp dụng */
-.td-left .td-back {
-  position: absolute !important;
-  top: -120px !important; /* ↑ đẩy cao hơn hẳn */
-  left: -5px !important; /* căn trái nhẹ cho cân */
-  z-index: 5; /* nổi lên trên ảnh */
-  background: #ff6b6b;
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
-}
-
-/* 3) Phòng khi bị “cắt” bởi overflow ở container */
-.td-container,
-.td-left {
-  overflow: visible !important;
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .lt-title {
+    font-size: 2rem;
+  }
+  .lt-card {
+    padding: 1.2rem;
+  }
 }

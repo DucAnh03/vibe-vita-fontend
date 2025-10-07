@@ -1,60 +1,94 @@
-.tp-page {
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+* {
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  letter-spacing: 0.3px;
+}
+
+body {
+  background: #000;
   color: #fff;
-  padding: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+/* ====== Tổng thể ====== */
+.tp-page {
+  min-height: 100vh;
+  padding: 2rem 4rem;
+  background: #000;
 }
 
 .tp-title {
   text-align: center;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 30px;
-  color: #00e5a8;
+  color: #ff4747;
+  font-size: 2.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+  letter-spacing: 1px;
 }
 
+/* ====== Container chính ====== */
 .tp-container {
   display: flex;
-  justify-content: space-between;
-  gap: 40px;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3rem;
 }
 
-/* LEFT PANEL */
+/* ====== Cột trái (thông tin PT) ====== */
 .tp-left {
-  flex: 1;
-  min-width: 300px;
-  max-width: 400px;
-  background: #1a1a1a;
-  padding: 25px;
+  background: #0f0f0f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 255, 200, 0.15);
+  padding: 2.5rem;
+  text-align: center;
+  width: 380px;
+  position: relative;
+  box-shadow: 0 0 25px rgba(255, 70, 70, 0.15);
 }
 
 .tp-back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
   background: none;
-  color: #00e5a8;
   border: none;
-  font-size: 1rem;
-  margin-bottom: 10px;
+  color: #ff4747;
+  font-weight: 600;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: 0.3s;
 }
 
 .tp-back:hover {
-  color: #fff;
+  color: #ff7d7d;
+  transform: translateX(-3px);
 }
 
 .tp-subtitle {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-size: 1.4rem;
+  margin-bottom: 1.6rem;
+  color: #fff;
+  text-transform: uppercase;
 }
 
 .tp-image-wrap {
-  width: 100%;
-  height: 280px;
+  width: 260px;
+  height: 260px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
   overflow: hidden;
-  border-radius: 12px;
-  margin-bottom: 15px;
+  border: 3px solid #ff4747;
+  box-shadow: 0 0 35px rgba(255, 70, 70, 0.3);
+  transition: 0.3s;
+}
+
+.tp-image-wrap:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 60px rgba(255, 70, 70, 0.5);
 }
 
 .tp-image-wrap img {
@@ -64,78 +98,148 @@
 }
 
 .tp-name {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 
 .tp-rating {
-  color: #ffc107;
-  margin-top: 5px;
+  margin-top: 0.4rem;
+  color: #ffb800;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
-/* RIGHT PANEL */
+/* ====== Cột phải ====== */
 .tp-right {
-  flex: 2;
-  background: #111;
-  padding: 30px;
+  flex: 1;
+  background: #0b0b0b;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+  padding: 2.5rem 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 30px rgba(255, 70, 70, 0.1);
 }
 
 .tp-info-list {
   list-style: none;
-  margin-bottom: 20px;
+  padding: 0;
+  margin: 0 0 2rem;
 }
 
 .tp-info-list li {
-  margin: 10px 0;
-  font-size: 1rem;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 1.05rem;
+  color: #ddd;
 }
 
+.tp-info-list li:last-child {
+  border-bottom: none;
+}
+
+/* ====== Nâng cấp gói ====== */
 .tp-upgrade-section {
-  background: #181818;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 30px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 255, 200, 0.1);
+  margin-top: 2.5rem;
 }
 
 .tp-schedule-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #00e5a8;
-  margin-bottom: 15px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ff4747;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
 }
 
 .tp-desc {
   color: #ccc;
   font-size: 1rem;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .tp-price {
   display: block;
-  font-weight: 700;
-  color: #00e5a8;
-  margin-top: 5px;
+  color: #ffb800;
+  font-weight: 600;
+  margin-top: 0.8rem;
 }
 
+/* ====== Select dropdown ====== */
+.tp-select {
+  width: 80%;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #ff4747;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+  margin-bottom: 1.5rem;
+}
+
+.tp-select:hover,
+.tp-select:focus {
+  border-color: #ff6f6f;
+  box-shadow: 0 0 10px rgba(255, 70, 70, 0.4);
+}
+
+/* ====== Nút thanh toán ====== */
 .tp-btn {
-  background: linear-gradient(135deg, #00e5a8, #00b894);
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ff4747, #ff1a1a);
   color: #fff;
   font-weight: 700;
-  padding: 12px 32px;
-  border: none;
-  border-radius: 8px;
+  font-size: 1.1rem;
   cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: 0.3s;
+  text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(255, 70, 70, 0.3);
 }
 
 .tp-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(0, 229, 168, 0.5);
+  background: linear-gradient(90deg, #ff5f5f, #ff2e2e);
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(255, 70, 70, 0.5);
+}
+
+/* ====== Khi đã thanh toán ====== */
+.trainer-payment-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #000;
+  color: #ff4747;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 900px) {
+  .tp-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tp-left,
+  .tp-right {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .tp-page {
+    padding: 1.5rem;
+  }
+
+  .tp-title {
+    font-size: 2.2rem;
+  }
+
+  .tp-select {
+    width: 100%;
+  }
 }
