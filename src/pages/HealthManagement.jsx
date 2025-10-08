@@ -17,10 +17,16 @@ function HealthManagement() {
           <div className="card-image-container">
             <img src={calendar} alt="Lịch" className="card-image" />
           </div>
-          <button className="card-button" onClick={() => navigate("/lich")}>
+          <button
+            className="card-button"
+            onClick={() => navigate("/my-bookings")}
+          >
             LỊCH
           </button>
-          <button className="detail-button" onClick={() => navigate("/lich")}>
+          <button
+            className="detail-button"
+            onClick={() => navigate("/my-bookings")}
+          >
             XEM THÊM
           </button>
         </div>
