@@ -18,7 +18,7 @@ const Home = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  // Close dropdown when clicking outside
+  // 🔹 Đóng dropdown khi click ra ngoài
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -32,10 +32,21 @@ const Home = () => {
     };
   }, []);
 
+  // 🔹 Cập nhật: thêm đường dẫn cho từng tiện ích
   const utilities = [
-    { id: 1, title: "PT LISTS", image: utilities1 },
-    { id: 2, title: "THEO DÕI SỨC KHỎE", image: utilities2 },
-    { id: 3, title: "GỢI Ý THỰC ĐƠN", image: utilities3 },
+    { id: 1, title: "PT LISTS", image: utilities1, path: "/list-trainers" },
+    {
+      id: 2,
+      title: "QUẢN LÝ SỨC KHỎE",
+      image: utilities2,
+      path: "/health",
+    },
+    {
+      id: 3,
+      title: "GỢI Ý THỰC ĐƠN",
+      image: utilities3,
+      path: "/suggest",
+    },
   ];
 
   const eatToday = [
@@ -111,7 +122,7 @@ const Home = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         setShowUserDropdown(false);
-                        navigate("/my-bookings"); // 👉 route mới
+                        navigate("/my-bookings");
                       }}
                     >
                       <span>Lịch sử Booking</span>
@@ -175,12 +186,17 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Tiện ích */}
+        {/* 🔹 Tiện ích */}
         <div className="app_home_convenient">
           <h2 className="utilities_title fs-1">CÔNG CỤ</h2>
           <ul className="utilities_list">
             {utilities.map((item) => (
-              <li key={item.id} className="utilities_item">
+              <li
+                key={item.id}
+                className="utilities_item"
+                onClick={() => navigate(item.path)}
+                style={{ cursor: "pointer" }}
+              >
                 <img src={item.image} alt={item.title} />
                 <div className="utilities_overlay">
                   <span className="fs-5">{item.title}</span>
