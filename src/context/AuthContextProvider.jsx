@@ -1,185 +1,87 @@
-// import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from 'react'
 
-// export const AuthContext = createContext();
-
-// export const AuthProvider = ({ children }) => {
-//   const [user, setUser] = useState(null);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     // Check if user is logged in on app start
-//     const token = localStorage.getItem("token");
-//     const userData = localStorage.getItem("user");
-
-//     if (token && userData) {
-//       try {
-//         setUser(JSON.parse(userData));
-//       } catch (error) {
-//         console.error("Error parsing user data:", error);
-//         localStorage.removeItem("token");
-//         localStorage.removeItem("user");
-//       }
-//     }
-//     setLoading(false);
-//   }, []);
-
-//   const login = async (email, password) => {
-//     try {
-//       const response = await fetch("http://localhost:5000/api/auth/login", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ email, password }),
-//       });
-
-//       const data = await response.json();
-
-//       if (response.ok) {
-//         const { token, user: userData } = data;
-//         localStorage.setItem("token", token);
-//         localStorage.setItem("user", JSON.stringify(userData));
-//         setUser(userData);
-//         return { success: true, user: userData };
-//       } else {
-//         return { success: false, error: data.message || "Đăng nhập thất bại" };
-//       }
-//     } catch (error) {
-//       console.error("Login error:", error);
-//       return { success: false, error: "Lỗi kết nối server" };
-//     }
-//   };
-
-//   const register = async (name, email, password) => {
-//     try {
-//       const response = await fetch("http://localhost:5000/api/auth/register", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ username: name, email, password }),
-//       });
-
-//       const data = await response.json();
-
-//       if (response.ok) {
-//         const { token, user: userData } = data;
-//         localStorage.setItem("token", token);
-//         localStorage.setItem("user", JSON.stringify(userData));
-//         setUser(userData);
-//         return { success: true, user: userData };
-//       } else {
-//         return { success: false, error: data.message || "Đăng ký thất bại" };
-//       }
-//     } catch (error) {
-//       console.error("Register error:", error);
-//       return { success: false, error: "Lỗi kết nối server" };
-//     }
-//   };
-
-//   const logout = () => {
-//     localStorage.removeItem("token");
-//     localStorage.removeItem("user");
-//     setUser(null);
-//   };
-
-//   const value = {
-//     user,
-//     loading,
-//     login,
-//     register,
-//     logout,
-//     isAuthenticated: !!user,
-//     userRole: user?.role || "user", // Default role is 'user'
-//   };
-
-//   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-// };
-
-import React, { createContext, useState, useEffect } from "react";
-
-export const AuthContext = createContext();
+export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const API_URL = process.env.REACT_APP_API_URL; // ✅ dùng biến môi trường thay vì localhost
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
+    // Check if user is logged in on app start
+    const token = localStorage.getItem('token')
+    const userData = localStorage.getItem('user')
 
     if (token && userData) {
       try {
-        setUser(JSON.parse(userData));
+        setUser(JSON.parse(userData))
       } catch (error) {
-        console.error("Error parsing user data:", error);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        console.error('Error parsing user data:', error)
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
       }
     }
-    setLoading(false);
-  }, []);
+    setLoading(false)
+  }, [])
 
   const login = async (email, password) => {
     try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
-        method: "POST",
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password }),
-      });
+        body: JSON.stringify({ email, password })
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (response.ok) {
-        const { token, user: userData } = data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(userData));
-        setUser(userData);
-        return { success: true, user: userData };
+        const { token, user: userData } = data
+        localStorage.setItem('token', token)
+        localStorage.setItem('user', JSON.stringify(userData))
+        setUser(userData)
+        return { success: true, user: userData }
       } else {
-        return { success: false, error: data.message || "Đăng nhập thất bại" };
+        return { success: false, error: data.message || 'Đăng nhập thất bại' }
       }
     } catch (error) {
-      console.error("Login error:", error);
-      return { success: false, error: "Lỗi kết nối server" };
+      console.error('Login error:', error)
+      return { success: false, error: 'Lỗi kết nối server' }
     }
-  };
+  }
 
   const register = async (name, email, password) => {
     try {
-      const response = await fetch(`${API_URL}/api/auth/register`, {
-        method: "POST",
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username: name, email, password }),
-      });
+        body: JSON.stringify({ username: name, email, password })
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (response.ok) {
-        const { token, user: userData } = data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(userData));
-        setUser(userData);
-        return { success: true, user: userData };
+        const { token, user: userData } = data
+        localStorage.setItem('token', token)
+        localStorage.setItem('user', JSON.stringify(userData))
+        setUser(userData)
+        return { success: true, user: userData }
       } else {
-        return { success: false, error: data.message || "Đăng ký thất bại" };
+        return { success: false, error: data.message || 'Đăng ký thất bại' }
       }
     } catch (error) {
-      console.error("Register error:", error);
-      return { success: false, error: "Lỗi kết nối server" };
+      console.error('Register error:', error)
+      return { success: false, error: 'Lỗi kết nối server' }
     }
-  };
+  }
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-  };
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    setUser(null)
+  }
 
   const value = {
     user,
@@ -188,8 +90,8 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     isAuthenticated: !!user,
-    userRole: user?.role || "user",
-  };
+    userRole: user?.role || 'user' // Default role is 'user'
+  }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
