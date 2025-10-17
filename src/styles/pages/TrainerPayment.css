@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
 * {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   box-sizing: border-box;
   letter-spacing: 0.3px;
 }
-
 body {
   background: #000;
   color: #fff;
@@ -26,8 +25,40 @@ body {
   font-size: 2.6rem;
   font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: 3rem;
+  margin-bottom: 1.25rem;
   letter-spacing: 1px;
+}
+
+/* ====== Toolbar: nút quay lại giống TrainerDetail, ngoài ảnh, sát mép trái ====== */
+.tp-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 0 1.2rem 0; /* nằm ngay dưới tiêu đề */
+}
+
+.tp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease, background 0.18s ease;
+}
+.tp-back:hover {
+  transform: translateX(-2px);
+  border-color: #ff4747;
+  background: rgba(255, 71, 71, 0.12);
+  box-shadow: 0 0 0 4px rgba(255, 71, 71, 0.12);
+}
+.tp-back svg {
+  color: #ff4747;
 }
 
 /* ====== Container chính ====== */
@@ -51,22 +82,8 @@ body {
   box-shadow: 0 0 25px rgba(255, 70, 70, 0.15);
 }
 
-.tp-back {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: none;
-  border: none;
-  color: #ff4747;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.tp-back:hover {
-  color: #ff7d7d;
-  transform: translateX(-3px);
-}
+/* (Quan trọng) KHÔNG dùng absolute để tránh đè ảnh
+   .tp-back { position: static !important; top:auto; left:auto; } */
 
 .tp-subtitle {
   font-size: 1.4rem;
@@ -85,12 +102,10 @@ body {
   box-shadow: 0 0 35px rgba(255, 70, 70, 0.3);
   transition: 0.3s;
 }
-
 .tp-image-wrap:hover {
   transform: scale(1.05);
   box-shadow: 0 0 60px rgba(255, 70, 70, 0.5);
 }
-
 .tp-image-wrap img {
   width: 100%;
   height: 100%;
@@ -102,7 +117,6 @@ body {
   font-weight: 700;
   margin-top: 1rem;
 }
-
 .tp-rating {
   margin-top: 0.4rem;
   color: #ffb800;
@@ -125,14 +139,12 @@ body {
   padding: 0;
   margin: 0 0 2rem;
 }
-
 .tp-info-list li {
   padding: 1rem 1.2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 1.05rem;
   color: #ddd;
 }
-
 .tp-info-list li:last-child {
   border-bottom: none;
 }
@@ -157,7 +169,6 @@ body {
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
-
 .tp-price {
   display: block;
   color: #ffb800;
@@ -178,7 +189,6 @@ body {
   transition: 0.3s;
   margin-bottom: 1.5rem;
 }
-
 .tp-select:hover,
 .tp-select:focus {
   border-color: #ff6f6f;
@@ -199,7 +209,6 @@ body {
   text-transform: uppercase;
   box-shadow: 0 0 20px rgba(255, 70, 70, 0.3);
 }
-
 .tp-btn:hover {
   background: linear-gradient(90deg, #ff5f5f, #ff2e2e);
   transform: translateY(-2px);
@@ -224,21 +233,17 @@ body {
     flex-direction: column;
     align-items: center;
   }
-
   .tp-left,
   .tp-right {
     width: 100%;
     max-width: 700px;
   }
-
   .tp-page {
     padding: 1.5rem;
   }
-
   .tp-title {
     font-size: 2.2rem;
   }
-
   .tp-select {
     width: 100%;
   }

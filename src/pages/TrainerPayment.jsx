@@ -27,7 +27,7 @@ export default function TrainerPayment() {
     }
   }, [id, navigate, userId, paidKey])
 
-  // ✅ Lấy thông tin PT (với ảnh đầy đủ)
+  // ✅ Lấy thông tin PT (gắn prefix ảnh nếu tương đối)
   useEffect(() => {
     const fetchTrainer = async () => {
       try {
@@ -35,7 +35,6 @@ export default function TrainerPayment() {
         if (!res.ok) throw new Error('Không tìm thấy PT')
         const data = await res.json()
 
-        // ✅ Gắn prefix đường dẫn ảnh nếu cần
         const fullImage =
           data.image && !data.image.startsWith('http')
             ? `http://localhost:5000${data.image}`
@@ -79,9 +78,7 @@ export default function TrainerPayment() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({
-          packageType: selectedPlan
-        })
+        body: JSON.stringify({ packageType: selectedPlan })
       })
 
       const data = await res.json()
@@ -113,32 +110,35 @@ export default function TrainerPayment() {
     )
   }
 
+  const imgSrc =
+    trainer.image || 'https://via.placeholder.com/400x400?text=No+Image'
+
   return (
     <div className="tp-page">
       <h1 className="tp-title">NÂNG CẤP DỊCH VỤ HUẤN LUYỆN VIÊN</h1>
 
+      {/* === Toolbar: nút quay lại giống TrainerDetail, nằm ngoài ảnh, sát mép trái === */}
+      <div className="tp-toolbar">
+        <button className="tp-back" onClick={() => navigate('/list-trainers')}>
+          <ArrowLeftIcon />
+          <span>Quay lại danh sách PT</span>
+        </button>
+      </div>
+
       <div className="tp-container">
         {/* LEFT */}
         <div className="tp-left">
-          <button
-            className="tp-back"
-            onClick={() => navigate('/list-trainers')}
-          >
-            ← Quay lại danh sách PT
-          </button>
-
+          {/* (ĐÃ BỎ nút tp-back khỏi đây để không đè ảnh) */}
           <h2 className="tp-subtitle">THÔNG TIN HUẤN LUYỆN VIÊN</h2>
+
           <div className="tp-image-wrap">
             <img
-              src={
-                trainer.image ||
-                'https://via.placeholder.com/400x400?text=No+Image'
-              }
+              src={imgSrc}
               alt={trainer.username}
-              onError={(e) =>
-                (e.target.src =
-                  'https://via.placeholder.com/400x400?text=No+Image')
-              }
+              onError={(e) => {
+                e.currentTarget.src =
+                  'https://via.placeholder.com/400x400?text=No+Image'
+              }}
             />
           </div>
           <div className="tp-name">
@@ -188,5 +188,17 @@ export default function TrainerPayment() {
         </div>
       </div>
     </div>
+  )
+}
+
+/* ==== Icon SVG ==== */
+function ArrowLeftIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path
+        d="M20 11v2H8l4 4-1.4 1.4L4.2 12l6.4-6.4L12 7l-4 4h12z"
+        fill="currentColor"
+      />
+    </svg>
   )
 }

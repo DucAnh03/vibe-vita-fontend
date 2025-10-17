@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap');
+
+:root {
+  --gy-bg: #000;
+  --gy-text: #fff;
+  --gy-sub: #cfcfcf;
+  --gy-accent: #ff4747;
+  --gy-card: #0f0f0f;
+  --gy-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background: var(--gy-bg);
+  color: var(--gy-text);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.gy-page {
+  min-height: 100vh;
+  padding: 2.5rem 1.25rem 3.5rem;
+}
+.gy-title {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--gy-accent);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Toolbar */
+.gy-toolbar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.gy-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #111;
+  border: 1px solid var(--gy-border);
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  min-width: 300px;
+}
+.gy-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--gy-text);
+  width: 260px;
+  font-size: 0.95rem;
+}
+.gy-sort {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.gy-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  color: #111;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+}
+.gy-sort-dir {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid var(--gy-border);
+  color: var(--gy-text);
+  cursor: pointer;
+}
+.gy-sort-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  min-width: 220px;
+  z-index: 20;
+  background: #121212;
+  border: 1px solid var(--gy-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  padding: 0.4rem;
+}
+.gy-sort-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: var(--gy-text);
+  border: none;
+  padding: 0.6rem 0.75rem;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.gy-sort-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.gy-sort-item.active {
+  background: rgba(255, 71, 71, 0.16);
+  color: #fff;
+}
+
+/* Grid & Card */
+.gy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.6rem;
+  margin-top: 0.6rem;
+}
+.gy-card {
+  background: var(--gy-card);
+  border: 1px solid var(--gy-border);
+  border-radius: 16px;
+  padding: 1.1rem 1.1rem 1.3rem;
+  text-align: center;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: 0 0 16px rgba(255, 71, 71, 0.06);
+}
+.gy-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 36px rgba(255, 71, 71, 0.28);
+}
+
+/* Image */
+.gy-image-wrap {
+  width: 260px;
+  height: 180px;
+  margin: 0 auto 12px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 3px solid rgba(255, 71, 71, 0.7);
+  box-shadow: 0 0 20px rgba(255, 71, 71, 0.18);
+}
+.gy-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Name pill */
+.gy-name {
+  display: inline-block;
+  margin: 0.35rem auto 0.9rem;
+  padding: 0.38rem 0.9rem;
+  border-radius: 999px;
+  background: var(--gy-accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Info list */
+.gy-info {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  color: var(--gy-sub);
+  display: grid;
+  gap: 0.45rem;
+}
+.gy-info li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.gy-info svg {
+  color: #ffb800;
+}
+.gy-info li:nth-child(1) svg {
+  color: var(--gy-accent);
+} /* location đỏ */
+.gy-info li:nth-child(2) svg {
+  color: #5cc2ff;
+} /* clock xanh */
+
+.gy-actions {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+}
+.gy-btn {
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: 0.2s background, 0.2s color, transform 0.05s;
+}
+.gy-btn:active {
+  transform: translateY(1px);
+}
+.gy-btn.primary {
+  background: var(--gy-accent);
+  color: #fff;
+}
+.gy-btn.primary:hover {
+  background: #ff5f5f;
+}
+.gy-btn.ghost {
+  background: transparent;
+  color: var(--gy-accent);
+  border: 1px solid var(--gy-accent);
+}
+.gy-btn.ghost:hover {
+  background: var(--gy-accent);
+  color: #fff;
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+  .gy-title {
+    font-size: 2rem;
+  }
+  .gy-image-wrap {
+    width: 100%;
+    height: 190px;
+  }
+  .gy-search {
+    min-width: 100%;
+  }
+  .gy-search input {
+    width: 100%;
+  }
+}

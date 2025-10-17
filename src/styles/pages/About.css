@@ -1,0 +1,335 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap');
+
+:root {
+  --ab-bg: #000;
+  --ab-text: #fff;
+  --ab-sub: #cfcfcf;
+  --ab-accent: #ff4747;
+  --ab-card-bg: #fdeceb; /* hồng nhạt như ảnh */
+  --ab-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--ab-bg);
+  color: var(--ab-text);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.ab-page {
+  min-height: 100vh;
+}
+.ab-topbar {
+  height: 6px;
+  background: #7e4bff;
+} /* line tím mảnh trên cùng (giống ảnh) */
+
+.ab-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  padding: 22px;
+}
+
+/* Sidebar */
+.ab-sidebar {
+  background: linear-gradient(
+    180deg,
+    #ff6b6b 0%,
+    #ff4747 45%,
+    #b01919 75%,
+    #000 100%
+  );
+  border-right: 4px solid #000;
+  border-radius: 0 8px 8px 0;
+  padding: 22px 18px;
+  min-height: calc(100vh - 6px - 44px);
+}
+.ab-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.ab-nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 10px 6px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background 0.2s ease, transform 0.06s;
+}
+.ab-nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(1px);
+}
+.ab-nav-item.active {
+  background: rgba(255, 255, 255, 0.14);
+  position: relative;
+}
+.ab-nav-item.active::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Main card */
+.ab-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-right: 10px;
+}
+.ab-card {
+  width: min(960px, 100%);
+  background: var(--ab-card-bg);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  min-height: 300px;
+}
+
+/* FAQ pills */
+.ab-faq + .ab-faq {
+  margin-top: 14px;
+}
+
+.ab-faq-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.88);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  color: #1a1a1a;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  transition: filter 0.15s ease, transform 0.05s;
+}
+.ab-faq-head:hover {
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+.ab-faq-text {
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ab-faq-plus {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 71, 71, 0.12);
+  color: var(--ab-accent);
+  box-shadow: 0 0 0 1px rgba(255, 71, 71, 0.35) inset;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.ab-faq.open .ab-faq-plus {
+  background: rgba(255, 71, 71, 0.22);
+  transform: rotate(45deg); /* thành dấu “minus” cảm giác */
+}
+
+/* Answer box */
+.ab-faq-body {
+  background: rgba(255, 255, 255, 0.65);
+  color: #222;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  line-height: 1.55;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .ab-wrap {
+    grid-template-columns: 1fr;
+  }
+  .ab-sidebar {
+    min-height: auto;
+    border-right: 0;
+    border-radius: 8px;
+  }
+  .ab-main {
+    padding-right: 0;
+  }
+}
+/* nội dung About + Service + Contact dùng chung card hồng nhạt */
+.ab-content .ab-h1 {
+  margin: 6px 2px 8px;
+  color: #222;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+.ab-lead {
+  color: #3c3c3c;
+  margin: 2px 2px 14px;
+}
+
+.ab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.ab-feature {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+.ab-feature-ico {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(255, 71, 71, 0.12);
+  color: #ff4747;
+}
+.ab-feature-title {
+  font-weight: 800;
+  color: #111;
+}
+.ab-feature-desc {
+  color: #444;
+  font-size: 0.92rem;
+}
+
+.ab-h2 {
+  margin: 12px 2px 6px;
+  color: #111;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+.ab-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+  display: grid;
+  gap: 8px;
+}
+.ab-steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.ab-steps li span {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ff4747;
+  color: #fff;
+  font-weight: 800;
+}
+
+/* Service */
+.ab-service-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.ab-service-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+.ab-service-title {
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 6px;
+}
+.ab-service-card ul {
+  margin: 0;
+  padding-left: 0;
+  display: grid;
+  gap: 6px;
+  list-style: none;
+  color: #333;
+}
+.ab-service-card li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Contact */
+.ab-contact {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+.ab-contact-info p {
+  margin: 6px 0;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+.ab-contact-form {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.ab-contact-form input {
+  flex: 1;
+  min-width: 220px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  border: none;
+  background: #111;
+  color: #fff;
+}
+.ab-contact-form button {
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background: #ff4747;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+.ab-contact-form button:hover {
+  filter: brightness(1.05);
+}
+
+/* Responsive tweak */
+@media (max-width: 860px) {
+  .ab-contact {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Spinner, Alert, Card } from 'react-bootstrap'
+import '../styles/pages/UserBooking.css'
 
 export default function UserBookings() {
   const [bookings, setBookings] = useState([])
@@ -11,9 +12,7 @@ export default function UserBookings() {
     const fetchBookings = async () => {
       try {
         const res = await fetch('http://localhost:5000/api/booking/user', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         })
         const data = await res.json()
         setBookings(Array.isArray(data) ? data : data.bookings || [])
@@ -29,7 +28,7 @@ export default function UserBookings() {
 
   if (!token) {
     return (
-      <Alert variant="warning" className="mt-4 text-center">
+      <Alert variant="warning" className="mt-4 text-center ub-alert">
         ⚠ Bạn cần đăng nhập để xem lịch đã đặt
       </Alert>
     )
@@ -37,7 +36,7 @@ export default function UserBookings() {
 
   if (loading) {
     return (
-      <div className="text-center mt-5">
+      <div className="text-center mt-5 ub-loading">
         <Spinner animation="border" />
         <p className="mt-3">⏳ Đang tải dữ liệu...</p>
       </div>
@@ -45,19 +44,25 @@ export default function UserBookings() {
   }
 
   return (
-    <div className="container mt-5">
-      <Card className="shadow-lg rounded-4">
+    <div className="ub-page container mt-5">
+      <Card className="ub-card shadow-lg rounded-4">
         <Card.Body>
-          <Card.Title className="text-center fw-bold fs-3 mb-4">
+          <Card.Title className="ub-title text-center fw-bold fs-3 mb-4">
             📅 Lịch tập của tôi
           </Card.Title>
 
           {bookings.length === 0 ? (
-            <Alert variant="info" className="text-center">
+            <Alert variant="info" className="text-center ub-alert">
               ❌ Bạn chưa đặt lịch nào.
             </Alert>
           ) : (
-            <Table striped bordered hover responsive className="align-middle">
+            <Table
+              striped
+              bordered
+              hover
+              responsive
+              className="align-middle ub-table"
+            >
               <thead className="table-dark text-center">
                 <tr>
                   <th>Ngày</th>
@@ -86,7 +91,7 @@ export default function UserBookings() {
                             ? 'bg-success'
                             : b.status === 'cancelled'
                             ? 'bg-danger'
-                            : 'bg-warning text-dark'
+                            : 'bg-warning'
                         }`}
                       >
                         {b.status}

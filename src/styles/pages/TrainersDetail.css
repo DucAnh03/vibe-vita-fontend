@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 * {
-  font-family: "Inter", sans-serif;
-  letter-spacing: 0.3px;
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.3px;
 }
 
 body {
@@ -26,8 +26,40 @@ body {
   font-size: 2.8rem;
   font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: 3rem;
+  margin-bottom: 1.25rem;
   letter-spacing: 1px;
+}
+
+/* ========== Toolbar: nút Quay lại ngoài ảnh, sát mép trái ========== */
+.td-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 0 1.2rem 0; /* nằm ngay dưới tiêu đề */
+}
+
+.td-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease, background 0.18s ease;
+}
+.td-back:hover {
+  transform: translateX(-2px);
+  border-color: #ff4747;
+  background: rgba(255, 71, 71, 0.12);
+  box-shadow: 0 0 0 4px rgba(255, 71, 71, 0.12);
+}
+.td-back svg {
+  color: #ff4747;
 }
 
 /* ========== Container chính ========== */
@@ -51,30 +83,18 @@ body {
   box-shadow: 0 0 25px rgba(255, 70, 70, 0.1);
 }
 
-.td-back {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: none;
-  border: none;
-  color: #ff5a5a;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.2s;
-}
+/* (Quan trọng) KHÔNG đặt .td-back trong .td-left => không bị đè ảnh nữa */
+/* Xoá mọi position:absolute cũ nếu có:
+   .td-back { position: static !important; top:auto; left:auto; } */
 
-.td-back:hover {
-  color: #ff8888;
-  transform: translateX(-3px);
-}
-
+/* Tiêu đề nhỏ trong card trái */
 .td-subtitle {
   font-size: 1.5rem;
   margin-bottom: 1.6rem;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .td-image-wrap {
@@ -87,12 +107,10 @@ body {
   box-shadow: 0 0 40px rgba(255, 70, 70, 0.3);
   transition: 0.3s;
 }
-
 .td-image-wrap:hover {
   transform: scale(1.05);
   box-shadow: 0 0 60px rgba(255, 70, 70, 0.5);
 }
-
 .td-image-wrap img {
   width: 100%;
   height: 100%;
@@ -128,7 +146,6 @@ body {
   padding: 0;
   margin: 0 0 2rem 0;
 }
-
 .td-info-list li {
   padding: 1rem 1.2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -136,12 +153,12 @@ body {
   color: #ddd;
   transition: background 0.3s;
 }
-
 .td-info-list li:hover {
   background: rgba(255, 255, 255, 0.04);
   border-radius: 8px;
 }
 
+/* ========== Bảng lịch ========== */
 .td-schedule-title {
   font-size: 1.5rem;
   color: #ff4747;
@@ -151,19 +168,16 @@ body {
   text-align: center;
 }
 
-/* ========== Bảng lịch ========== */
 .td-schedule {
   overflow-x: auto;
   border-radius: 10px;
   margin-bottom: 2rem;
 }
-
 .td-schedule table {
   width: 100%;
   border-collapse: collapse;
   color: #fff;
 }
-
 .td-schedule th,
 .td-schedule td {
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -171,12 +185,10 @@ body {
   padding: 0.6rem;
   font-size: 0.95rem;
 }
-
 .td-schedule th {
   background: rgba(255, 70, 70, 0.15);
   font-weight: 600;
 }
-
 .td-schedule .day {
   font-weight: 600;
   color: #ffb800;
@@ -192,7 +204,6 @@ body {
   outline: none;
   transition: 0.2s;
 }
-
 .td-schedule input:focus {
   border-color: #ff4747;
 }
@@ -212,7 +223,6 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-
 .td-btn:hover {
   background: #ff5f5f;
   transform: translateY(-2px);
@@ -225,7 +235,6 @@ body {
   font-size: 1.3rem;
   color: #ff5a5a;
 }
-
 .spinner {
   border: 4px solid #333;
   border-top: 4px solid #ff4747;
@@ -235,7 +244,6 @@ body {
   margin: 0 auto 1rem;
   animation: spin 0.8s linear infinite;
 }
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -248,21 +256,17 @@ body {
     flex-direction: column;
     align-items: center;
   }
-
   .td-left,
   .td-right {
     width: 100%;
     max-width: 700px;
   }
-
   .td-page {
     padding: 1.5rem;
   }
-
   .td-title {
     font-size: 2.2rem;
   }
-
   .td-schedule th,
   .td-schedule td {
     font-size: 0.85rem;

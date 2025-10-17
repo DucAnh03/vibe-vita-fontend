@@ -1,287 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+:root {
+  --text: #fff;
+  --accent: #ff4747;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
 .app_footer {
-  width: 100%;
-  background: linear-gradient(90deg, #000000 59.13%, #FB5241 100%);
-  position: relative;
-  padding: 60px 0 20px;
+  background: linear-gradient(90deg, #000 60%, rgba(255, 71, 71, 0.9) 100%);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  padding: 36px 0 20px;
 }
 
+/* ===== Top area (2 columns + contact full width) ===== */
 .footer_content {
-  max-width: 1920px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 18px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
-  align-items: start;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-areas:
+    'brand subscribe'
+    'contact contact';
+  gap: 20px 28px;
 }
-
-/* Brand Section */
 .footer_brand {
+  grid-area: brand;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
+}
+.footer_subscription {
+  grid-area: subscribe;
+  display: flex;
+  justify-content: flex-end;
+}
+.footer_contact {
+  grid-area: contact;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
+/* brand */
 .footer_logo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .footer_logo_image {
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   object-fit: cover;
 }
-
 .footer_logo_text {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 24px;
-  color: #FB5241;
+  color: #ffb0b0;
+  letter-spacing: 0.3px;
 }
-
 .footer_description {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  color: #FFFFFF;
   margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 0.95;
 }
 
-/* Contact Section */
-.footer_contact {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
+/* subscribe — black pill like screenshot */
+.subscription_form {
+  width: 100%;
+  max-width: 420px;
+  margin-left: auto;
 }
-
-.contact_title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 39px;
-  text-align: center;
-  color: #FFFFFF;
-  margin: 0;
-}
-
-.contact_info {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.contact_item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #FFFFFF;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 29px;
-}
-
-.contact_icon {
-  width: 35px;
-  height: 35px;
-  stroke: #FFFFFF;
-  stroke-width: 2;
-}
-
-.social_media {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-}
-
-.social_link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 2px solid #FFFFFF;
-  border-radius: 50%;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.social_link:hover {
-  background-color: #FFFFFF;
-  transform: translateY(-2px);
-}
-
-.social_link:hover .social_icon {
-  stroke: #FB5241;
-}
-
-.social_icon {
-  width: 20px;
-  height: 20px;
-  stroke: #FFFFFF;
-  stroke-width: 2;
-}
-
-/* Subscription Section */
-.footer_subscription {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-}
-
 .subscription_input_group {
   display: flex;
   align-items: center;
-  background-color: #000000;
-  border-radius: 35.3582px;
+  background: #0d0d0d;
+  border: 1px solid var(--border);
+  border-radius: 999px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) inset,
+    0 4px 10px rgba(0, 0, 0, 0.25);
 }
-
 .subscription_input {
-  background-color: #000000;
+  flex: 1;
   border: none;
-  padding: 15px 20px;
-  color: #FFFFFF;
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
   outline: none;
-  min-width: 250px;
+  background: transparent;
+  color: #fff;
+  padding: 12px 16px;
+  font-size: 14px;
 }
-
 .subscription_input::placeholder {
-  color: #8B8989;
+  color: #8b8b8b;
+}
+.subscription_button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: #0d0d0d;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  padding: 12px 18px;
+  transition: filter 0.15s ease, transform 0.06s ease, background 0.15s ease;
+  border-left: 1px solid var(--border);
+  border-radius: 999px;
+}
+.subscription_button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
 }
 
-.subscription_button {
-  background-color: #FB5241;
-  border: none;
-  padding: 15px 25px;
-  color: #FFFFFF;
-  font-family: 'Inter', sans-serif;
+/* contact center */
+.contact_title {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+.contact_inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  align-items: center;
+  justify-content: center;
+}
+.contact_item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 700;
   font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+}
+.contact_icon {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  color: #fff;
 }
 
-.subscription_button:hover {
-  background-color: #e63e2e;
+/* social */
+.social_media {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+.social_link {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border: 1px solid var(--border);
+  transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease;
+}
+.social_link:hover {
+  background: #fff;
+  color: #000;
+  transform: translateY(-1px);
+}
+.social_icon {
+  width: 18px;
+  height: 18px;
 }
 
-/* Bottom Navigation */
+/* bottom nav */
 .footer_bottom {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid #FB5241;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
 }
-
 .footer_bottom_links {
   display: flex;
+  gap: 32px;
   justify-content: center;
-  gap: 40px;
   flex-wrap: wrap;
 }
-
 .bottom_link {
-  color: #FFFFFF;
+  color: #fff;
   text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  transition: color 0.3s ease;
+  font-weight: 800;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  transition: color 0.2s ease, background 0.2s ease;
 }
-
 .bottom_link:hover {
-  color: #FB5241;
+  color: var(--accent);
+  background: rgba(255, 71, 71, 0.1);
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .footer_content {
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-  }
-  
-  .footer_subscription {
-    grid-column: 1 / -1;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 768px) {
+/* responsive */
+@media (max-width: 900px) {
   .footer_content {
     grid-template-columns: 1fr;
-    gap: 30px;
-    text-align: center;
+    grid-template-areas:
+      'brand'
+      'subscribe'
+      'contact';
   }
-  
-  .footer_brand {
-    align-items: center;
-  }
-  
-  .footer_contact {
-    align-items: center;
-  }
-  
   .footer_subscription {
-    justify-content: center;
+    justify-content: flex-start;
   }
-  
-  .subscription_input_group {
-    flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .subscription_input {
-    min-width: auto;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .footer_bottom_links {
-    gap: 20px;
-  }
-  
-  .bottom_link {
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 576px) {
-  .app_footer {
-    padding: 40px 0 15px;
-  }
-  
-  .footer_content {
-    padding: 0 15px;
-  }
-  
-  .contact_title {
-    font-size: 28px;
-  }
-  
-  .contact_item {
-    font-size: 20px;
-  }
-  
-  .footer_description {
-    font-size: 14px;
-  }
-  
-  .footer_bottom_links {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .bottom_link {
-    font-size: 16px;
+  .subscription_form {
+    margin-left: 0;
+    max-width: 100%;
   }
 }

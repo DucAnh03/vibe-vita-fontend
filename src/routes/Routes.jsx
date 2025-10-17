@@ -20,9 +20,9 @@ import UserBookings from '../pages/UserBookings.jsx'
 import TrainerProfile from '../pages/TrainerProfile.jsx'
 import PaymentSuccess from '../pages/PaymentSuccess.jsx'
 import TrainerPayment from '../pages/TrainerPayment.jsx'
-// ✅ Tạo router chính
+import GymDetail from '../pages/GymDetail.jsx'
+import About from '../pages/About.jsx'
 const routes = createBrowserRouter([
-  // 👉 Các route chính có layout
   {
     path: '/',
     element: <MainLayout />,
@@ -45,11 +45,11 @@ const routes = createBrowserRouter([
       { path: 'vip2', element: <Vip2Page /> },
       { path: 'my-bookings', element: <UserBookings /> },
       { path: 'pt-profile', element: <TrainerProfile /> },
-      { path: 'trainer-payment/:id', element: <TrainerPayment /> }
+      { path: 'trainer-payment/:id', element: <TrainerPayment /> },
+      { path: 'gym-detail/:id', element: <GymDetail /> },
+      { path: 'about', element: <About /> }
     ]
   },
-
-  // 👉 Route PaymentSuccess để ngoài cùng, KHÔNG nằm trong MainLayout
   {
     path: '/payment-success',
     element: <PaymentSuccess />

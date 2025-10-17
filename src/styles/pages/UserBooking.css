@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap');
+
+:root {
+  --ub-bg: #000;
+  --ub-text: #fff;
+  --ub-sub: #cfcfcf;
+  --ub-accent: #ff4747;
+  --ub-card: #0f0f0f;
+  --ub-border: rgba(255, 255, 255, 0.08);
+}
+
+.ub-page {
+  color: var(--ub-text);
+  font-family: Inter, system-ui, sans-serif;
+}
+body {
+  background: var(--ub-bg);
+}
+
+/* Title */
+.ub-title {
+  color: var(--ub-accent);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 800;
+  animation: ubFadeUp 0.35s ease both;
+}
+
+/* Card */
+.ub-card {
+  background: var(--ub-card);
+  border: 1px solid var(--ub-border);
+  box-shadow: 0 0 18px rgba(255, 71, 71, 0.08);
+  animation: ubFadeUp 0.35s 0.05s ease both;
+}
+
+/* Alerts (warning/info) theo theme tối */
+.ub-alert {
+  border-radius: 14px;
+  border: 1px solid var(--ub-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ub-text);
+}
+.ub-alert.alert-warning {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.35);
+  color: #fde68a;
+}
+.ub-alert.alert-info {
+  background: rgba(92, 194, 255, 0.12);
+  border-color: rgba(92, 194, 255, 0.35);
+  color: #d6efff;
+}
+
+/* Loading */
+.ub-loading .spinner-border {
+  color: var(--ub-accent) !important;
+  border-width: 0.25rem;
+  border-right-color: transparent !important;
+}
+.ub-loading p {
+  color: var(--ub-sub);
+}
+
+/* Table */
+.ub-table {
+  --bs-table-bg: transparent;
+  color: var(--ub-text);
+  border-color: var(--ub-border);
+  overflow: hidden;
+  border-radius: 14px;
+}
+.ub-table td,
+.ub-table th {
+  border-color: var(--ub-border) !important;
+  vertical-align: middle;
+}
+
+/* Header */
+.ub-table thead.table-dark th {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 71, 71, 0.25),
+    rgba(255, 71, 71, 0.18)
+  ) !important;
+  color: #fff !important;
+  border-color: var(--ub-border) !important;
+  font-weight: 700;
+}
+
+/* Striped + hover tinh tế */
+.ub-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+.ub-table tbody tr:hover {
+  background: rgba(255, 71, 71, 0.1);
+  transition: background 0.18s ease;
+}
+
+/* Badge trạng thái */
+.ub-page .badge {
+  padding: 0.5rem 0.7rem;
+  border-radius: 10px;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.2px;
+  border: 1px solid transparent;
+}
+.ub-page .badge.bg-success {
+  background: rgba(34, 197, 94, 0.14) !important;
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #86efac !important;
+}
+.ub-page .badge.bg-danger {
+  background: rgba(239, 68, 68, 0.14) !important;
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #fda4af !important;
+}
+.ub-page .badge.bg-warning {
+  background: rgba(245, 158, 11, 0.16) !important;
+  border-color: rgba(245, 158, 11, 0.35);
+  color: #facc15 !important; /* bỏ text-dark để hợp dark theme */
+}
+
+/* Table corners (giữ cảm giác card) */
+.ub-card .table {
+  margin-bottom: 0;
+  border-radius: 14px;
+}
+
+/* Animation */
+@keyframes ubFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .ub-title {
+    font-size: 1.5rem;
+  }
+}
+/* ===== Force white text in table ===== */
+.ub-table {
+  --bs-table-color: #fff; /* màu chữ mặc định */
+  --bs-table-striped-color: #fff; /* màu chữ khi striped */
+  --bs-table-hover-color: #fff; /* màu chữ khi hover */
+}
+
+.ub-table tbody td,
+.ub-table tbody th,
+.ub-table thead th {
+  color: #fff !important; /* đảm bảo trắng trong mọi trạng thái */
+}
+
+/* Nếu có class .text-dark bị gắn từ Bootstrap, ép lại thành trắng */
+.ub-table .text-dark {
+  color: #fff !important;
+}

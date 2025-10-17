@@ -46,13 +46,13 @@ export default function TrainerDetail() {
 
   // ✅ Danh sách ngày và giờ mẫu
   const days = [
-    'Mon (4/10)',
-    'Tue (5/10)',
-    'Wed (6/10)',
-    'Thur (7/10)',
-    'Fri (8/10)',
-    'Sat (9/10)',
-    'Sun (10/10)'
+    'Mon (13/10)',
+    'Tue (14/10)',
+    'Wed (15/10)',
+    'Thur (16/10)',
+    'Fri (17/10)',
+    'Sat (18/10)',
+    'Sun (19/10)'
   ]
   const times = ['7h', '9h', '11h', '13h', '15h', '17h', '19h']
 
@@ -118,34 +118,36 @@ export default function TrainerDetail() {
     }
   }
 
+  const imgSrc = trainer.image
+    ? trainer.image.startsWith('http')
+      ? trainer.image
+      : `http://localhost:5000${trainer.image}`
+    : 'https://via.placeholder.com/400'
+
   return (
     <div className="td-page">
       <h1 className="td-title">CHI TIẾT HUẤN LUYỆN VIÊN</h1>
 
+      {/* === Toolbar: nút Quay lại nằm ngoài ảnh, sát mép trái === */}
+      <div className="td-toolbar">
+        <button className="td-back" onClick={() => navigate('/list-trainers')}>
+          <ArrowLeftIcon />
+          <span>Quay lại</span>
+        </button>
+      </div>
+
       <div className="td-container">
         {/* Cột trái: Thông tin PT */}
         <div className="td-left">
-          <button
-            className="td-back"
-            onClick={() => navigate('/list-trainers')}
-          >
-            ← Quay lại danh sách
-          </button>
-
+          {/* (ĐÃ bỏ nút td-back khỏi đây để không đè ảnh) */}
           <h2 className="td-subtitle">THÔNG TIN HUẤN LUYỆN VIÊN</h2>
 
           <div className="td-image-wrap">
             <img
-              src={
-                trainer.image
-                  ? trainer.image.startsWith('http')
-                    ? trainer.image
-                    : `http://localhost:5000${trainer.image}`
-                  : 'https://via.placeholder.com/400'
-              }
+              src={imgSrc}
               alt={trainer.username || 'Trainer'}
               onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/400'
+                e.currentTarget.src = 'https://via.placeholder.com/400'
               }}
             />
           </div>
@@ -213,5 +215,17 @@ export default function TrainerDetail() {
         </div>
       </div>
     </div>
+  )
+}
+
+/* ==== Icon SVG ==== */
+function ArrowLeftIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path
+        d="M20 11v2H8l4 4-1.4 1.4L4.2 12l6.4-6.4L12 7l-4 4h12z"
+        fill="currentColor"
+      />
+    </svg>
   )
 }
