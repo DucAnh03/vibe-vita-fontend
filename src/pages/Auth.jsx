@@ -23,9 +23,12 @@ const Auth = () => {
 
   useEffect(() => {
     // Redirect if already authenticated based on role
+
     if (isAuthenticated) {
       if (userRole === "pt") {
         navigate("/pt-home");
+      } else if (userRole === "admin") {
+        navigate("/admin");
       } else {
         navigate("/");
       }

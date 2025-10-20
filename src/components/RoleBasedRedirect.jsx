@@ -1,28 +1,32 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import PThome from "../pages/PThome";
-import { Navigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import "bootstrap/dist/css/bootstrap.min.css";
-import TrainerProfile from "../pages/TrainerProfile.jsx";
-("../pages/TrainerProfile");
-import "../pages/Update";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContextProvider";
+
 const RoleBasedRedirect = () => {
-  const { userRole } = useAuth();
-  {
-    path: "/pt-home";
-    element: <PThome />;
-  }
-  {
-    path: "/pt-profile";
-    element: <TrainerProfile />;
-  }
-  // Redirect based on user role
-  if (userRole === "pt") {
-    return <Navigate to="/pt-home" replace />;
-  } else {
-    return <Navigate to="/" replace />;
-  }
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    // ✅ Điều hướng theo vai trò
+    switch (user.role) {
+      case "admin":
+        navigate("/admin");
+        break;
+      case "pt":
+        navigate("/pt-home");
+        break;
+      default:
+        navigate("/");
+        break;
+    }
+  }, [user, navigate]);
+
+  return null; // Không render gì, chỉ điều hướng
 };
 
 export default RoleBasedRedirect;
