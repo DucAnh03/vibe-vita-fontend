@@ -1,60 +1,60 @@
-import React, { useState, useEffect, useRef } from "react";
-import "../styles/pages/__home.css";
-import logoDangNhap from "../assets/icons/Dangnhap.png";
-import logoDangKi from "../assets/icons/Dangki.png";
-import imagehome from "../assets/images/Mask group.png";
-import utilities1 from "../assets/images/utilites1.png";
-import utilities2 from "../assets/images/utilities2.png";
-import utilities3 from "../assets/images/utilities3.png";
-import eatTodayImage from "../assets/images/eat-today.png";
-import homevip from "../assets/images/home_vip.png";
-import { NavLink, useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import AIChatBox from "../components/AIChatBox";
+import React, { useState, useEffect, useRef } from 'react'
+import '../styles/pages/__home.css'
+import logoDangNhap from '../assets/icons/Dangnhap.png'
+import logoDangKi from '../assets/icons/Dangki.png'
+import imagehome from '../assets/images/Mask group.png'
+import utilities1 from '../assets/images/utilites1.png'
+import utilities2 from '../assets/images/utilities2.png'
+import utilities3 from '../assets/images/utilities3.png'
+import eatTodayImage from '../assets/images/eat-today.png'
+import homevip from '../assets/images/home_vip.png'
+import { NavLink, useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
+import AIChatBox from '../components/AIChatBox'
 
 const Home = () => {
-  const { user, logout, isAuthenticated } = useAuth();
-  const [showUserDropdown, setShowUserDropdown] = useState(false);
-  const dropdownRef = useRef(null);
-  const navigate = useNavigate();
+  const { user, logout, isAuthenticated } = useAuth()
+  const [showUserDropdown, setShowUserDropdown] = useState(false)
+  const dropdownRef = useRef(null)
+  const navigate = useNavigate()
 
   // 🔹 Đóng dropdown khi click ra ngoài
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowUserDropdown(false);
+        setShowUserDropdown(false)
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   // 🔹 Cập nhật: thêm đường dẫn cho từng tiện ích
   const utilities = [
-    { id: 1, title: "PT LISTS", image: utilities1, path: "/list-trainers" },
+    { id: 1, title: 'PT LISTS', image: utilities1, path: '/list-trainers' },
     {
       id: 2,
-      title: "QUẢN LÝ SỨC KHỎE",
+      title: 'QUẢN LÝ SỨC KHỎE',
       image: utilities2,
-      path: "/health",
+      path: '/health'
     },
     {
       id: 3,
-      title: "GỢI Ý THỰC ĐƠN",
+      title: 'GỢI Ý THỰC ĐƠN',
       image: utilities3,
-      path: "/suggest",
-    },
-  ];
+      path: '/suggest'
+    }
+  ]
 
   const eatToday = [
     { id: 1, image: eatTodayImage },
     { id: 2, image: eatTodayImage },
     { id: 3, image: eatTodayImage },
-    { id: 4, image: eatTodayImage },
-  ];
+    { id: 4, image: eatTodayImage }
+  ]
 
   return (
     <div className="app_home d-flex flex-column">
@@ -85,7 +85,7 @@ const Home = () => {
                   </span>
                   <svg
                     className={`dropdown_arrow ${
-                      showUserDropdown ? "rotated" : ""
+                      showUserDropdown ? 'rotated' : ''
                     }`}
                     width="16"
                     height="16"
@@ -108,9 +108,9 @@ const Home = () => {
                     <button
                       className="dropdown_item profile_item"
                       onClick={(e) => {
-                        e.stopPropagation();
-                        setShowUserDropdown(false);
-                        navigate("/profile");
+                        e.stopPropagation()
+                        setShowUserDropdown(false)
+                        navigate('/profile')
                       }}
                     >
                       <span>Profile</span>
@@ -120,9 +120,9 @@ const Home = () => {
                     <button
                       className="dropdown_item bookings_item"
                       onClick={(e) => {
-                        e.stopPropagation();
-                        setShowUserDropdown(false);
-                        navigate("/my-bookings");
+                        e.stopPropagation()
+                        setShowUserDropdown(false)
+                        navigate('/my-bookings')
                       }}
                     >
                       <span>Lịch sử Booking</span>
@@ -131,9 +131,9 @@ const Home = () => {
                     {/* Logout */}
                     <button
                       onClick={(e) => {
-                        e.stopPropagation();
-                        setShowUserDropdown(false);
-                        logout();
+                        e.stopPropagation()
+                        setShowUserDropdown(false)
+                        logout()
                       }}
                       className="dropdown_item logout_item"
                     >
@@ -175,7 +175,7 @@ const Home = () => {
               </p>
               <button
                 className="btn_guide"
-                onClick={() => navigate("/suggest")}
+                onClick={() => navigate('/suggest')}
               >
                 XEM GỢI Ý
               </button>
@@ -195,7 +195,7 @@ const Home = () => {
                 key={item.id}
                 className="utilities_item"
                 onClick={() => navigate(item.path)}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               >
                 <img src={item.image} alt={item.title} />
                 <div className="utilities_overlay">
@@ -215,31 +215,29 @@ const Home = () => {
             <div className="vip_cards">
               <div
                 className="vip_card"
-                onClick={() => navigate("/vip1")}
-                style={{ cursor: "pointer" }}
+                onClick={() => navigate('/vip1')}
+                style={{ cursor: 'pointer' }}
               >
                 <h3>VIP 1</h3>
                 <ul>
-                  <li>Nội dung 1</li>
-                  <li>Nội dung 2</li>
-                  <li>Nội dung 3</li>
-                  <li>Nội dung 4</li>
-                  <li>Nội dung 5</li>
+                  <li>Tính chỉ số BMI</li>
+                  <li>Xem gợi ý bữa ăn</li>
+                  <li>Xem gợi ý bài tập</li>
                 </ul>
                 <span className="vip_price">$12</span>
               </div>
               <div
                 className="vip_card"
-                onClick={() => navigate("/vip2")}
-                style={{ cursor: "pointer" }}
+                onClick={() => navigate('/vip2')}
+                style={{ cursor: 'pointer' }}
               >
                 <h3>VIP 2</h3>
                 <ul>
-                  <li>Nội dung 1</li>
-                  <li>Nội dung 2</li>
-                  <li>Nội dung 3</li>
-                  <li>Nội dung 4</li>
-                  <li>Nội dung 5</li>
+                  <li>Tính chỉ số BMI</li>
+                  <li>Xem gợi ý bữa ăn</li>
+                  <li>Xem gợi ý bài tập</li>
+                  <li>Đặt lịch với PT</li>
+                  <li>Chat với PT</li>
                 </ul>
                 <span className="vip_price">$20</span>
               </div>
@@ -278,7 +276,7 @@ const Home = () => {
       {/* AI Chatbox */}
       <AIChatBox />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
