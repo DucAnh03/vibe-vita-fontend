@@ -1,279 +1,292 @@
-import React, { useEffect, useState } from "react";
-import "../../styles/pages/AdminDashboard.css";
+import React, { useEffect, useState } from 'react'
+import '../../styles/pages/AdminDashboard.css'
 
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState("users");
-  const [users, setUsers] = useState([]);
-  const [trainers, setTrainers] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [selected, setSelected] = useState(null);
+  const [activeTab, setActiveTab] = useState('users')
+  const [users, setUsers] = useState([])
+  const [trainers, setTrainers] = useState([])
+  const [filtered, setFiltered] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selected, setSelected] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  // ✅ Lấy danh sách users + trainers
   const fetchAllData = async () => {
-    setLoading(true);
-    setError("");
+    setLoading(true)
+    setError('')
     try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("Không tìm thấy token đăng nhập!");
+      const token = localStorage.getItem('token')
+      if (!token) throw new Error('Không tìm thấy token đăng nhập!')
 
       const [usersRes, trainersRes] = await Promise.all([
-        fetch("http://localhost:5000/api/admin/users", {
-          headers: { Authorization: `Bearer ${token}` },
+        fetch('http://localhost:5000/api/admin/users', {
+          headers: { Authorization: `Bearer ${token}` }
         }),
-        fetch("http://localhost:5000/api/admin/trainers", {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-      ]);
+        fetch('http://localhost:5000/api/admin/trainers', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      ])
 
-      const usersData = await usersRes.json();
-      const trainersData = await trainersRes.json();
+      const usersData = await usersRes.json()
+      const trainersData = await trainersRes.json()
 
-      if (!usersRes.ok)
-        throw new Error(usersData.message || "Không thể tải danh sách user");
+      if (!usersRes.ok) throw new Error(usersData.message || 'Lỗi tải Users')
       if (!trainersRes.ok)
-        throw new Error(
-          trainersData.message || "Không thể tải danh sách trainer"
-        );
+        throw new Error(trainersData.message || 'Lỗi tải Trainers')
 
-      setUsers(usersData.users || []);
-      setTrainers(trainersData.trainers || []);
-      setFiltered(usersData.users || []);
+      setUsers(usersData.users || [])
+      setTrainers(trainersData.trainers || [])
+      setFiltered(usersData.users || [])
     } catch (err) {
-      console.error("❌ Lỗi tải dữ liệu:", err);
-      setError(err.message);
+      setError(err.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchAllData();
-  }, []);
+    fetchAllData()
+  }, [])
 
-  // ✅ Tìm kiếm
   useEffect(() => {
-    const lower = searchTerm.toLowerCase();
-    const list = activeTab === "users" ? users : trainers;
+    const lower = searchTerm.toLowerCase()
+    const list = activeTab === 'users' ? users : trainers
     setFiltered(
       list.filter(
         (item) =>
           item.username?.toLowerCase().includes(lower) ||
           item.email?.toLowerCase().includes(lower)
       )
-    );
-  }, [searchTerm, activeTab, users, trainers]);
+    )
+  }, [searchTerm, activeTab, users, trainers])
 
-  // ✅ Lấy chi tiết user/trainer (gộp healthInfo)
   const fetchDetails = async (id) => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("Không tìm thấy token!");
-
+      const token = localStorage.getItem('token')
       const endpoint =
-        activeTab === "trainers"
+        activeTab === 'trainers'
           ? `http://localhost:5000/api/admin/trainers/${id}`
-          : `http://localhost:5000/api/admin/users/${id}`;
-
+          : `http://localhost:5000/api/admin/users/${id}`
       const res = await fetch(endpoint, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.message)
 
-      if (!res.ok) throw new Error(data.message || "Không thể tải chi tiết");
-
-      // ✅ Gộp healthInfo vào user (nếu có)
       if (data.user && data.healthInfo) {
-        data.user.height = data.healthInfo.height;
-        data.user.weight = data.healthInfo.weight;
-        data.user.bmi = data.healthInfo.bmi;
-        data.user.bmiCategory = data.healthInfo.bmiCategory;
+        data.user.height = data.healthInfo.height
+        data.user.weight = data.healthInfo.weight
+        data.user.bmi = data.healthInfo.bmi
+        data.user.bmiCategory = data.healthInfo.bmiCategory
       }
 
-      setSelected(data.trainer || data.user || null);
+      setSelected(data.trainer || data.user || null)
     } catch (err) {
-      alert("❌ Lỗi tải chi tiết: " + err.message);
+      alert('❌ Lỗi tải chi tiết: ' + err.message)
     }
-  };
+  }
 
-  const renderPrices = (prices) => {
-    if (!prices) return "Chưa có thông tin";
-    return Object.entries(prices)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join(", ");
-  };
+  // 🔹 Dữ liệu doanh thu mẫu
+  const revenueData = {
+    totalBuyers: 13,
+    plans: [
+      { name: '1 ngày', buyers: 7, price: 20000 },
+      { name: '7 ngày', buyers: 4, price: 40000 },
+      { name: '1 tháng', buyers: 2, price: 60000 }
+    ]
+  }
+  const totalRevenue = revenueData.plans.reduce(
+    (sum, plan) => sum + plan.buyers * plan.price,
+    0
+  )
 
-  if (loading)
-    return <div className="admin-loading">⏳ Đang tải dữ liệu...</div>;
+  if (loading) return <div className="admin-loading">⏳ Đang tải...</div>
   if (error)
     return (
       <div className="admin-error">
         ❌ {error} <button onClick={fetchAllData}>Thử lại</button>
       </div>
-    );
+    )
 
   return (
-    <div className="admin-dashboard">
-      <h1 className="admin-title">🛠️ Admin Dashboard</h1>
+    <div className="admin-layout">
+      {/* Sidebar */}
+      <aside className="admin-sidebar">
+        <div className="sidebar-logo">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+            alt="logo"
+          />
+          <h2>Admin Panel</h2>
+        </div>
 
-      {/* Tabs */}
-      <div className="admin-tabs">
-        <button
-          className={`admin-tab ${activeTab === "users" ? "active" : ""}`}
-          onClick={() => {
-            setActiveTab("users");
-            setFiltered(users);
-          }}
-        >
-          👥 Users
-        </button>
-        <button
-          className={`admin-tab ${activeTab === "trainers" ? "active" : ""}`}
-          onClick={() => {
-            setActiveTab("trainers");
-            setFiltered(trainers);
-          }}
-        >
-          🏋️ Trainers
-        </button>
-      </div>
+        <nav className="sidebar-nav">
+          <button
+            className={activeTab === 'users' ? 'active' : ''}
+            onClick={() => {
+              setActiveTab('users')
+              setFiltered(users)
+            }}
+          >
+            👥 Quản lý Users
+          </button>
+          <button
+            className={activeTab === 'trainers' ? 'active' : ''}
+            onClick={() => {
+              setActiveTab('trainers')
+              setFiltered(trainers)
+            }}
+          >
+            🏋️ Quản lý Trainers
+          </button>
+          <button
+            className={activeTab === 'revenue' ? 'active' : ''}
+            onClick={() => setActiveTab('revenue')}
+          >
+            💰 Doanh thu
+          </button>
+          <hr />
+          <button onClick={() => alert('Đăng xuất!')}>🚪 Đăng xuất</button>
+        </nav>
+      </aside>
 
-      {/* Search */}
-      <div className="admin-search">
-        <input
-          type="text"
-          placeholder="🔍 Tìm theo email hoặc username..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="admin-input"
-        />
-        <button onClick={fetchAllData} className="admin-refresh-btn">
-          🔄 Làm mới
-        </button>
-      </div>
+      {/* Content */}
+      <main className="admin-content">
+        {activeTab === 'revenue' ? (
+          <div className="revenue-section">
+            <h1>💰 Báo cáo Doanh thu</h1>
+            <p className="revenue-summary">
+              Tổng số người mua gói: <b>{revenueData.totalBuyers}</b>
+            </p>
 
-      {/* Danh sách */}
-      <div className="admin-list-container">
-        {filtered.length === 0 ? (
-          <p className="admin-empty">Không có dữ liệu để hiển thị.</p>
+            <div className="revenue-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Gói</th>
+                    <th>Số người mua</th>
+                    <th>Giá (VND)</th>
+                    <th>Doanh thu (VND)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {revenueData.plans.map((plan) => (
+                    <tr key={plan.name}>
+                      <td>{plan.name}</td>
+                      <td>{plan.buyers}</td>
+                      <td>{plan.price.toLocaleString()}</td>
+                      <td>{(plan.buyers * plan.price).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="revenue-total">
+              Tổng doanh thu: <b>{totalRevenue.toLocaleString()} đ</b>
+            </div>
+          </div>
         ) : (
-          <div className="admin-grid-cards">
-            {filtered.map((item) => (
-              <div
-                key={item.id || item._id}
-                className="admin-card"
-                onClick={() => fetchDetails(item.id || item._id)}
-              >
-                <div className="admin-card-header">
+          <>
+            <header className="content-header">
+              <h1>
+                {activeTab === 'users'
+                  ? '👥 Danh sách Users'
+                  : '🏋️ Danh sách Trainers'}
+              </h1>
+              <div className="content-stats">
+                <span>Tổng: {filtered.length}</span>
+                <button onClick={fetchAllData}>🔄 Làm mới</button>
+              </div>
+            </header>
+
+            <div className="admin-search">
+              <input
+                type="text"
+                placeholder="🔍 Tìm theo email hoặc username..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="admin-input"
+              />
+            </div>
+
+            <div className="admin-grid-cards">
+              {filtered.map((item) => (
+                <div
+                  key={item.id || item._id}
+                  className="admin-card"
+                  onClick={() => fetchDetails(item.id || item._id)}
+                >
                   <img
                     src={
                       item.image
-                        ? item.image.startsWith("http")
+                        ? item.image.startsWith('http')
                           ? item.image
                           : `http://localhost:5000${item.image}`
-                        : "https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                        : 'https://cdn-icons-png.flaticon.com/512/847/847969.png'
                     }
                     alt={item.username}
                     className="admin-avatar"
                   />
-                  <div>
-                    <h3 className="admin-name">{item.username}</h3>
-                    <p className="admin-role">
-                      {item.role === "pt"
-                        ? "🏋️ Personal Trainer"
-                        : item.role === "admin"
-                        ? "🧩 Administrator"
-                        : "👤 User"}
-                    </p>
-                  </div>
+                  <h3>{item.username}</h3>
+                  <p>{item.email}</p>
                 </div>
-
-                <div className="admin-card-body">
-                  <p>📧 {item.email}</p>
-                  <p>📱 {item.phone || "Chưa có số"}</p>
-
-                  {activeTab === "trainers" && (
-                    <>
-                      {item.specialty && <p>💪 {item.specialty}</p>}
-                      {item.experience && <p>🎓 {item.experience} năm</p>}
-                      {item.location && <p>📍 {item.location}</p>}
-                      {item.prices && (
-                        <p>💸 Gói tập: {renderPrices(item.prices)}</p>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         )}
-      </div>
+      </main>
 
-      {/* Modal chi tiết */}
+      {/* 🔹 Modal chi tiết */}
       {selected && (
         <div className="admin-modal-overlay" onClick={() => setSelected(null)}>
           <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
             <h2 className="modal-title">
-              {selected.username}{" "}
+              Thông tin chi tiết
               <span className="role-badge">
-                {selected.role === "pt"
-                  ? "🏋️ Trainer"
-                  : selected.role === "admin"
-                  ? "🧩 Admin"
-                  : "👤 User"}
+                {selected.role === 'pt'
+                  ? '🏋️ Trainer'
+                  : selected.role === 'admin'
+                  ? '🧩 Admin'
+                  : '👤 User'}
               </span>
             </h2>
-
-            <div className="modal-info">
-              <h3>📄 Thông tin cá nhân</h3>
-              <p>📧 {selected.email}</p>
-              <p>📱 {selected.phone || "Chưa có số"}</p>
-              {selected.dateOfBirth && (
-                <p>
-                  🎂{" "}
-                  {new Date(selected.dateOfBirth).toLocaleDateString("vi-VN")}
-                </p>
-              )}
-              <p>🕓 Tạo lúc: {new Date(selected.createdAt).toLocaleString()}</p>
-
-              <h3>💎 Gói Premium</h3>
-              {selected.isPremium ? (
-                <p>
-                  💠 Premium – còn {selected.premiumDaysLeft || 0} ngày (hết hạn{" "}
-                  {new Date(selected.premiumExpiredAt).toLocaleDateString(
-                    "vi-VN"
-                  )}
-                  )
-                </p>
-              ) : (
-                <p>⚪ Gói thường</p>
-              )}
-
-              {/* ⚖️ Thông tin thể trạng */}
-              {selected.height || selected.weight || selected.bmi ? (
-                <>
-                  <h3>⚖️ Thể trạng</h3>
-                  <p>Chiều cao: {selected.height || "Chưa có"} cm</p>
-                  <p>Cân nặng: {selected.weight || "Chưa có"} kg</p>
-                  <p>BMI: {selected.bmi || "Chưa có"}</p>
-                  <p>Phân loại: {selected.bmiCategory || "Chưa xác định"}</p>
-                </>
-              ) : null}
-
-              {/* 🏋️ Dành riêng cho Trainer */}
-              {selected.role === "pt" && (
-                <>
-                  <h3>🏋️ Thông tin huấn luyện viên</h3>
-                  {selected.specialty && <p>💪 {selected.specialty}</p>}
-                  {selected.experience && <p>🎓 {selected.experience} năm</p>}
-                  {selected.location && <p>📍 {selected.location}</p>}
-                  {selected.prices && <p>💸 {renderPrices(selected.prices)}</p>}
-                </>
-              )}
-            </div>
-
+            <table className="detail-table">
+              <tbody>
+                <tr>
+                  <th>Tên người dùng</th>
+                  <td>{selected.username}</td>
+                </tr>
+                <tr>
+                  <th>Email</th>
+                  <td>{selected.email}</td>
+                </tr>
+                <tr>
+                  <th>Số điện thoại</th>
+                  <td>{selected.phone || 'Chưa có'}</td>
+                </tr>
+                <tr>
+                  <th>Chiều cao</th>
+                  <td>
+                    {selected.height ? `${selected.height} cm` : 'Chưa có'}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Cân nặng</th>
+                  <td>
+                    {selected.weight ? `${selected.weight} kg` : 'Chưa có'}
+                  </td>
+                </tr>
+                <tr>
+                  <th>BMI</th>
+                  <td>
+                    {selected.bmi
+                      ? `${selected.bmi} (${selected.bmiCategory})`
+                      : 'Chưa tính'}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <button className="close-btn" onClick={() => setSelected(null)}>
               Đóng
             </button>
@@ -281,7 +294,7 @@ const AdminDashboard = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AdminDashboard;
+export default AdminDashboard

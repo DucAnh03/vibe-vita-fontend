@@ -46,13 +46,13 @@ export default function TrainerDetail() {
 
   // ✅ Danh sách ngày và giờ mẫu
   const days = [
-    'Mon (13/10)',
-    'Tue (14/10)',
-    'Wed (15/10)',
-    'Thur (16/10)',
-    'Fri (17/10)',
-    'Sat (18/10)',
-    'Sun (19/10)'
+    'Mon (3/11)',
+    'Tue (04/11)',
+    'Wed (05/11)',
+    'Thur (06/11)',
+    'Fri (07/11)',
+    'Sat (08/11)',
+    'Sun (09/11)'
   ]
   const times = ['7h', '9h', '11h', '13h', '15h', '17h', '19h']
 

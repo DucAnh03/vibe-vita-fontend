@@ -1,202 +1,288 @@
 /* ================================
-   🧩 ADMIN DASHBOARD (Large & Clean)
-   ================================ */
+🌐 ADMIN DASHBOARD - LIGHT THEME
+=============================== */
 
-.admin-dashboard {
-  padding: 50px 70px;
-  background: #f5f8fb;
-  min-height: 100vh;
-  font-family: "Inter", sans-serif;
-  color: #1e293b;
-}
-
-/* 🎯 Title */
-.admin-title {
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: #1f3b73;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-/* 🔹 Tabs */
-.admin-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 30px;
-}
-
-.admin-tab {
-  padding: 14px 30px;
-  border: none;
-  border-radius: 10px;
-  background: #e8ecf5;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #334155;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.admin-tab:hover {
-  background: #dbe8ff;
-}
-
-.admin-tab.active {
-  background: #3b82f6;
-  color: white;
-  box-shadow: 0 5px 14px rgba(59, 130, 246, 0.3);
-}
-
-/* 🔍 Search Bar */
-.admin-search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 30px;
-}
-
-.admin-input {
-  width: 380px;
-  padding: 14px 18px;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 10px;
-  font-size: 1.05rem;
-  background: white;
-  outline: none;
-  transition: 0.2s;
-}
-
-.admin-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
-}
-
-.admin-refresh-btn {
-  padding: 12px 22px;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.admin-refresh-btn:hover {
-  background: #2563eb;
-}
-
-/* 📋 List Container */
-.admin-list-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.admin-grid-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 28px;
-  width: 100%;
-  max-width: 1300px;
-}
-
-/* 🧩 Card */
-.admin-card {
-  background: white;
-  border-radius: 16px;
-  padding: 22px 26px;
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition: all 0.25s;
-}
-
-.admin-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-}
-
-/* 🧑 Header */
-.admin-card-header {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 12px;
-}
-
-.admin-avatar {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #3b82f6;
-  background-color: #f1f5f9;
-}
-
-.admin-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #1e293b;
-}
-
-.admin-role {
-  font-size: 1rem;
-  color: #475569;
-}
-
-/* 🧾 Body */
-.admin-card-body p {
-  font-size: 1rem;
-  margin: 5px 0;
-  color: #475569;
-  line-height: 1.5;
-}
-
-.admin-field {
-  font-size: 0.95rem;
-  color: #374151;
-}
-
-/* 🕒 States */
-.admin-loading,
-.admin-error,
-.admin-empty {
-  text-align: center;
-  font-size: 1.05rem;
-  color: #64748b;
-  margin-top: 50px;
-}
-
-.admin-error button {
-  margin-left: 10px;
-  padding: 8px 16px;
-  background: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.admin-error button:hover {
-  background: #dc2626;
+body.admin-page {
+  background: #f3f4f6;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  color: #111827;
 }
 
 /* ================================
-   💎 Modal (chi tiết user/PT)
-   ================================ */
+📦 LAYOUT
+=============================== */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: #f9fafb;
+}
+
+/* ================================
+🎨 SIDEBAR
+=============================== */
+.admin-sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  color: #e2e8f0;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.15);
+  z-index: 8;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.sidebar-logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid #3b82f6;
+}
+.sidebar-logo h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ================================
+📋 NAVIGATION
+=============================== */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+.sidebar-nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.sidebar-nav button:hover {
+  background: rgba(59, 130, 246, 0.25);
+  color: #fff;
+}
+.sidebar-nav button.active {
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+/* ================================
+📑 MAIN CONTENT
+=============================== */
+.admin-content {
+  margin-left: 270px;
+  width: calc(100% - 270px);
+  padding: 50px 70px;
+  background: #ffffff;
+  border-radius: 20px 0 0 20px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.content-header h1 {
+  font-size: 2rem;
+  color: #1e3a8a;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.content-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  color: #334155;
+}
+.content-stats button {
+  padding: 8px 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.content-stats button:hover {
+  background: #1e3a8a;
+}
+
+/* ================================
+🔍 SEARCH BOX
+=============================== */
+.admin-search {
+  margin-bottom: 25px;
+}
+.admin-input {
+  width: 100%;
+  max-width: 480px;
+  padding: 12px 16px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #f9fafb;
+  transition: 0.25s;
+}
+.admin-input:focus {
+  border-color: #2563eb;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.25);
+  outline: none;
+}
+
+/* ================================
+👥 USER / TRAINER CARDS
+=============================== */
+.admin-grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 24px;
+}
+.admin-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+.admin-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+.admin-avatar {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+.admin-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+.admin-card p {
+  font-size: 0.95rem;
+  color: #475569;
+}
+
+/* ================================
+💰 REVENUE SECTION (FIXED)
+=============================== */
+.revenue-section {
+  background: #fff;
+  padding: 40px 60px;
+  border-radius: 20px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+}
+
+.revenue-section h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.revenue-summary {
+  font-size: 1.05rem;
+  color: #334155;
+  margin-bottom: 25px;
+}
+
+/* Bảng doanh thu */
+.revenue-table {
+  width: 100%;
+  overflow-x: auto;
+}
+.revenue-table table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.revenue-table th,
+.revenue-table td {
+  padding: 16px 20px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 1rem;
+}
+
+/* Tiêu đề bảng */
+.revenue-table th {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Ô dữ liệu */
+.revenue-table td {
+  color: #111827;
+  background: #fafafa;
+}
+.revenue-table tr:nth-child(even) td {
+  background: #f3f4f6;
+}
+
+/* Dòng cuối tổng doanh thu */
+.revenue-total {
+  text-align: right;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-top: 22px;
+}
+
+/* ================================
+📋 MODAL DETAILS
+=============================== */
 .admin-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(30, 41, 59, 0.6);
+  background: rgba(17, 24, 39, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -206,223 +292,78 @@
 
 .admin-modal {
   background: #fff;
-  padding: 40px;
-  border-radius: 20px;
-  max-width: 520px;
-  width: 92%;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  animation: fadeIn 0.3s ease-in-out;
+  color: #111827;
+  padding: 35px 45px;
+  border-radius: 14px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes fadeIn {
-  from {
-    transform: translateY(25px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.modal-avatar {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #3b82f6;
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e3a8a;
   margin-bottom: 20px;
-}
-
-.modal-info {
-  text-align: left;
-  margin-top: 12px;
-  font-size: 1.05rem;
-  color: #374151;
-  line-height: 1.7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .role-badge {
   font-size: 0.9rem;
-  background: #3b82f6;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 8px;
-  margin-left: 5px;
-}
-
-.close-btn {
-  margin-top: 24px;
-  padding: 10px 22px;
-  border: none;
-  border-radius: 10px;
-  background: #3b82f6;
-  color: white;
-  font-weight: 600;
-  font-size: 1.05rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.close-btn:hover {
   background: #2563eb;
+  color: white;
+  border-radius: 8px;
+  padding: 4px 10px;
 }
 
-/* ✅ Responsive */
-@media (max-width: 768px) {
-  .admin-dashboard {
-    padding: 20px;
-  }
-
-  .admin-avatar {
-    width: 70px;
-    height: 70px;
-  }
-
-  .admin-input {
-    width: 240px;
-  }
-
-  .modal-avatar {
-    width: 100px;
-    height: 100px;
-  }
-}
-.modal-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #1f3b73;
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
   margin-bottom: 20px;
 }
-
-.modal-info h3 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #2563eb;
-  margin-top: 16px;
-  margin-bottom: 8px;
-  border-bottom: 2px solid #e2e8f0;
-  padding-bottom: 4px;
-}
-
-.modal-info p {
-  font-size: 1.05rem;
-  margin: 6px 0;
-  color: #374151;
-}
-/* ================================
-   💎 Modal Section Upgrade
-   ================================ */
-
-/* 🔹 Container Modal */
-.admin-modal {
-  background: #fff;
-  padding: 40px;
-  border-radius: 20px;
-  max-width: 580px;
-  width: 92%;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-/* 🔹 Title & Badge */
-.modal-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #1f3b73;
-  margin-bottom: 25px;
-}
-
-.role-badge {
-  font-size: 1rem;
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 10px;
-  margin-left: 8px;
-  font-weight: 600;
-}
-
-/* ============================
-   🧩 Nhóm Thông tin (Box)
-   ============================ */
-.modal-info {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.detail-table th,
+.detail-table td {
   text-align: left;
-  margin-top: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e8f0;
 }
-
-.modal-section {
-  background: #f8fafc;
-  border-left: 5px solid #3b82f6;
-  border-radius: 10px;
-  padding: 18px 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: 0.3s ease;
-}
-
-.modal-section:hover {
-  background: #f1f5f9;
-  transform: translateY(-2px);
-}
-
-/* 🔹 Tiêu đề từng nhóm */
-.modal-section h3 {
-  font-size: 1.2rem;
+.detail-table th {
   font-weight: 700;
-  color: #1e40af;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: #1f2937;
+  width: 40%;
 }
-
-/* 🔹 Nội dung từng nhóm */
-.modal-section p {
-  font-size: 1.05rem;
-  margin: 4px 0;
+.detail-table td {
   color: #374151;
-  line-height: 1.6;
 }
 
-/* 🔹 Close Button */
 .close-btn {
-  margin-top: 26px;
-  padding: 12px 26px;
-  border: none;
-  border-radius: 12px;
-  background: #3b82f6;
-  color: white;
-  font-weight: 600;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background 0.25s ease;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.close-btn:hover {
   background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: 0.25s;
+}
+.close-btn:hover {
+  background: #1e3a8a;
 }
 
-/* 🔹 Responsive Modal */
-@media (max-width: 768px) {
-  .admin-modal {
-    padding: 24px;
+/* ================================
+📱 RESPONSIVE
+=============================== */
+@media (max-width: 900px) {
+  .admin-sidebar {
+    display: none;
   }
-
-  .modal-title {
-    font-size: 1.4rem;
-  }
-
-  .modal-section h3 {
-    font-size: 1.1rem;
-  }
-
-  .modal-section p {
-    font-size: 0.98rem;
+  .admin-content {
+    margin: 0;
+    padding: 20px;
+    width: 100%;
+    border-radius: 0;
   }
 }
